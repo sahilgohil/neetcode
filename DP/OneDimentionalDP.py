@@ -1,18 +1,3 @@
-class SearchProblem(object):
-    def __init__(self, N):
-        self.N = N
-    def startState(self):
-        return 0
-    def isEndState(self, state):
-        return state == self.N
-    def getSuccAndCost(self, state, costList):
-        result = []
-
-        if state + 1 <= self.N:
-            result.append(('One Step', (state + 1), costList[state]))
-        if state + 2 <= self.N:
-            result.append(('Two Step', (state + 2), costList[state]))
-        return result
 
 def climbing_stairs(N):
     cache = {}
@@ -28,6 +13,22 @@ def climbing_stairs(N):
 
 # print(climbing_stairs(4))
 
+def min_cost_climbing_stairs(costs):
+    cache = {}
+    n = len(costs)
+    def recursion(i):
+        if i in cache:
+            return cache[i]
+        if i<0:
+            return 0;
+        
+        one_step_cost = costs[i] + recursion(i-1)
+        two_step_cost = costs[i] + recursion(i-2)
+        cache[i] = min(one_step_cost, two_step_cost)
+        return cache[i]
+    return min(recursion(n-1), recursion(n-2))
+
+print(min_cost_climbing_stairs([10,15,20]))
 
 
         
