@@ -71,11 +71,22 @@ nums is given which is the maximum money that each house has
 create an array of size len(nums)
 put the base cases in the array as
 profitloot from house 0 is same
-profitloot from house 1 is 
+profitloot from house 1 is profit from one house before plus current and previous's max
+return the max will be the last index's value
 """
+
+def house_robing_bottom_up(houses):
+    dp = [0] * len(houses)
+    dp[0] = houses[0]
+    dp[1] = max(houses[0],houses[1])
+    for i in range(2,len(houses)):
+        dp[i] = max(dp[i-1], houses[i] + dp[i-2])
+    return dp[len(houses)-1]
+
+
 # print(min_cost_climbing_stairs_bottom_up([10,15,20]))
 # print(min_cost_climbing_stairs_top_down([10,15,20]))
-
+print(house_robing_bottom_up([2,7,9,3,1]))
 
         
 
