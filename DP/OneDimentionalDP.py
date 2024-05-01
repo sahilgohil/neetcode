@@ -51,7 +51,14 @@ loop for the rest of the steps
     return the minimum of the last two steps
 """
 
-
+def min_cost_climbing_stairs_bottom_up(costs):
+    dp = [0] * len(costs)
+    n = len(costs)
+    dp[0] = costs[0]
+    dp[1] = costs[1]
+    for i in range(2, len(costs)):
+        dp[i] = costs[i] + min(dp[i-1],dp[i-2])
+    return min(dp[n-1],dp[n-2])
 # def min_cost_climbing_stairs_bottom_up(costs):
 #     dp = [0] * len(costs)
 #     dp[0] = costs[0]
@@ -60,7 +67,7 @@ loop for the rest of the steps
 #         dp[i] = costs[i] + min(dp[i-1], dp[i-2])
 #     return min(dp[len(costs)-1], dp[len(costs)-2])
 
-# print(min_cost_climbing_stairs_bottom_up([10,15,20]))
+print(min_cost_climbing_stairs_bottom_up([10,15,20]))
 # print(min_cost_climbing_stairs_top_down([10,15,20]))
 
 
