@@ -132,6 +132,8 @@ use the helper function to get the dp without the first house
 use the helper functuon to get the dp without the last house
 return the maximum of the two dp
 
+Top-Down approach
+
 """
 def house_robber2_bottom_up(houses):
     n = len(houses)
@@ -146,7 +148,26 @@ def house_robber2_bottom_up(houses):
     dp1 = helper(1,n-1) # remove first house
     dp2 = helper(0,n-2) # remove the last house
     return max(dp1[n-1], dp2[n-2])
+def house_robber2_top_down(houses):
+    def helper(start, end):
+        cache = {}
+        def recursion(start, idx):
+            if idx < start and start == 0:
+                return 0
+            if idx < start and start == 1:
+                return houses[0]
+            if idx in cache:
+                return cache[idx]
         
+            cache[idx] = max(houses[idx] + recursion(start, idx-2), recursion(start, idx-1))
+            return cache[idx]
+        return cache
+    cache1 = helper(1, len(houses)-1)
+    cache2 = helper(0, len(houses)-2)
+
+    return max(cache1[len(houses-1)], cache2[len(houses-2)])
+        
+
 
 
 # print(house_robing_top_down([2,7,9,3,1]))
@@ -155,6 +176,8 @@ def house_robber2_bottom_up(houses):
 # print(house_robing_bottom_up([2,7,9,3,1]))
 
 print(house_robber2_bottom_up([2,3,2]))
+print(house_robing_top_down([2,3,2]))
+
 
         
 
