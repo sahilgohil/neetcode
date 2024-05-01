@@ -97,11 +97,64 @@ run the recursive function and return the value at the last index in cache
 
 def house_robing_top_down(houses):
     cache = {}
-    def recursion()
+    def recursion(idx):
+        if idx<0:
+            return 0
+        if idx == 1:
+            return houses[1]
+        if idx in cache:
+            return cache[idx]
+        cache[idx] = max(houses[idx] + recursion(idx-2), recursion(idx-1) )
 
+        return cache[idx]
+    recursion(len(houses)-1)
+    return cache[len(houses)-1]
+
+"""
+Read the above problem and imagine that the houses are located in the circular pattern
+hence, you cant rob the first and last house at the same time
+make 2 dp one with first house removed 
+another with last house removed.
+take the max of both that will be the answer
+"""
+"""
+Bottom-Up Approach
+nums is given which is the maximum money that each house has
+make a var n has value of the length of houses
+create a helper function that takes the starting and ending index and returns the dp array
+    make dp with values to 0
+    make dp of start to houses to start
+    make dp of start+1 to houses to start, start+1 max
+    loop thoush start+2 to end +1
+    use the same logic as the previous question
+    return the dp
+use the helper function to get the dp without the first house
+use the helper functuon to get the dp without the last house
+return the maximum of the two dp
+
+"""
+def house_robber2_bottom_up(houses):
+    n = len(houses)
+    def helper(start, end):
+        dp = [0]*n
+        dp[start] = houses[start]
+        dp[start+1] = max(houses[start], houses[start+1])
+
+        for i in range(start+2,end+1):
+            dp[i] = max(houses[i]+dp[i-2], dp[i-1])
+        return dp
+    dp1 = helper(1,n-1) # remove first house
+    dp2 = helper(0,n-2) # remove the last house
+    return max(dp1[n-1], dp2[n-2])
+        
+
+
+# print(house_robing_top_down([2,7,9,3,1]))
 # print(min_cost_climbing_stairs_bottom_up([10,15,20]))
 # print(min_cost_climbing_stairs_top_down([10,15,20]))
-print(house_robing_bottom_up([2,7,9,3,1]))
+# print(house_robing_bottom_up([2,7,9,3,1]))
+
+print(house_robber2_bottom_up([2,3,2]))
 
         
 
