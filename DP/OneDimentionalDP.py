@@ -83,6 +83,21 @@ def house_robing_bottom_up(houses):
         dp[i] = max(dp[i-1], houses[i] + dp[i-2])
     return dp[len(houses)-1]
 
+"""
+Top-Down approach
+keep a cache
+run the recursive funtion that takes index as an argument
+    if the i is less than 0 return 0
+    if i is in the cache then return the cache value
+    the value we calculate at i is max of (current house money + last to last house money, last house money)
+    store it in the cache at i
+    return the value in cache at i
+run the recursive function and return the value at the last index in cache
+"""
+
+def house_robing_top_down(houses):
+    cache = {}
+    def recursion()
 
 # print(min_cost_climbing_stairs_bottom_up([10,15,20]))
 # print(min_cost_climbing_stairs_top_down([10,15,20]))
