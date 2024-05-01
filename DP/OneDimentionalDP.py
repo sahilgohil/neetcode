@@ -27,20 +27,33 @@ get the total length of the costs
         return the cache value
     call the recursion function for one step and two step and return the minimum of the two
 """
-def min_cost_climbing_stairs(costs):
+def min_cost_climbing_stairs_top_down(costs):
     cache = {}
-    n = len(costs)
-    def recursion(i):
-        if i in cache:
-            return cache[i]
-        if i<0:
-            return 0;
+    def recursion(idx):
+        if idx in cache:
+            return cache[idx]
+        if idx < 0:
+            return 0
+        cost_one_step = costs[idx] + recursion(idx -1)
+        cost_two_step = costs[idx] + recursion(idx -2)
+        cache[idx] = min(cost_one_step, cost_two_step)
+        return cache[idx]
+    return min(recursion(len(costs)-1), recursion(len(costs)-2))        
+
+# def min_cost_climbing_stairs(costs):
+#     cache = {}
+#     n = len(costs)
+#     def recursion(i):
+#         if i in cache:
+#             return cache[i]
+#         if i<0:
+#             return 0;
         
-        one_step_cost = costs[i] + recursion(i-1)
-        two_step_cost = costs[i] + recursion(i-2)
-        cache[i] = min(one_step_cost, two_step_cost)
-        return cache[i]
-    return min(recursion(n-1), recursion(n-2))
+#         one_step_cost = costs[i] + recursion(i-1)
+#         two_step_cost = costs[i] + recursion(i-2)
+#         cache[i] = min(one_step_cost, two_step_cost)
+#         return cache[i]
+#     return min(recursion(n-1), recursion(n-2))
 
 def min_cost_climbing_stairs_bottom_up(costs):
     dp = [0] * len(costs)
@@ -50,7 +63,8 @@ def min_cost_climbing_stairs_bottom_up(costs):
         dp[i] = costs[i] + min(dp[i-1], dp[i-2])
     return min(dp[len(costs)-1], dp[len(costs)-2])
 
-print(min_cost_climbing_stairs_bottom_up([10,15,20]))
+# print(min_cost_climbing_stairs_bottom_up([10,15,20]))
+print(min_cost_climbing_stairs_top_down([10,15,20]))
 
 
         
