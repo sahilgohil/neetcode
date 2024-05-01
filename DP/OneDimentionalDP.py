@@ -40,31 +40,28 @@ def min_cost_climbing_stairs_top_down(costs):
         return cache[idx]
     return min(recursion(len(costs)-1), recursion(len(costs)-2))        
 
-# def min_cost_climbing_stairs(costs):
-#     cache = {}
-#     n = len(costs)
-#     def recursion(i):
-#         if i in cache:
-#             return cache[i]
-#         if i<0:
-#             return 0;
-        
-#         one_step_cost = costs[i] + recursion(i-1)
-#         two_step_cost = costs[i] + recursion(i-2)
-#         cache[i] = min(one_step_cost, two_step_cost)
-#         return cache[i]
-#     return min(recursion(n-1), recursion(n-2))
+"""
+Bottom-Up Approach
+create an array of size len(costs)
+put the base cases in the array as
+    cost to reach step 0 is the same and
+    cost to reach step 1 is the same
+loop for the rest of the steps
+    for each step the cost will be the minimum cost of previous one and two steps in addition to the current step cost
+    return the minimum of the last two steps
+"""
 
-def min_cost_climbing_stairs_bottom_up(costs):
-    dp = [0] * len(costs)
-    dp[0] = costs[0]
-    dp[1] = costs[1]
-    for i in range(2, len(costs)):
-        dp[i] = costs[i] + min(dp[i-1], dp[i-2])
-    return min(dp[len(costs)-1], dp[len(costs)-2])
+
+# def min_cost_climbing_stairs_bottom_up(costs):
+#     dp = [0] * len(costs)
+#     dp[0] = costs[0]
+#     dp[1] = costs[1]
+#     for i in range(2, len(costs)):
+#         dp[i] = costs[i] + min(dp[i-1], dp[i-2])
+#     return min(dp[len(costs)-1], dp[len(costs)-2])
 
 # print(min_cost_climbing_stairs_bottom_up([10,15,20]))
-print(min_cost_climbing_stairs_top_down([10,15,20]))
+# print(min_cost_climbing_stairs_top_down([10,15,20]))
 
 
         
