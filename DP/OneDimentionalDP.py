@@ -286,7 +286,16 @@ def decode_string_count(s:str)->int:
 This problem requires
 - creating array of length amount + 1 to accomodate for amount 0
 - at every step of the array we are filling the default value of amount + 1
-- at every iteration of the array we loop through the coins and put min of the value at that place or [amount - coin] +1
+- at every iteration of the array we loop through the coins and check if the coin is less than or equal to the current amount, if yes then we put min of the value at that place or [amount - coin] +1
+
+SUDO Code
+- make the array of lenght amount + 1 with default value as amount + 1
+- base case array[0] will be 0 no coins required for 0
+- for i from 1 to end
+    - iterate though each coin
+        - if the coin is less than or equal to the value of amount
+            - put the min value of (value at that index, value at index - coin + 1 as we want to add one more coin)
+return the array[amount] if array[amount] != amount + 1 else return not possible solution
 '''
 def coin_change(coins:List[int],amount:int)->int:
 
@@ -307,7 +316,7 @@ def coin_change(coins:List[int],amount:int)->int:
 # print(longest_palindrome("baa"))
 # print(count_palindromic_substrings("abc"))
 # print(decode_string_count("226"))
-print(coin_change([1,2,5],11))
+# print(coin_change([1,2,5],11))
 
 
 
