@@ -1,4 +1,7 @@
 
+from typing import List
+
+
 def climbing_stairs(N):
     cache = {}
     def recursion(n):
@@ -273,17 +276,32 @@ def decode_string_count(s:str)->int:
     return dp[-1]
 
 
-def move_diagonally(n):
-    # n = 5
-    for l in range(2, n + 1):
-        for i in range(n-l+1):
-            j = i + l - 1
-            print(f"l: {l} i:{i} j:{j}")
+# def move_diagonally(n):
+#     # n = 5
+#     for l in range(2, n + 1):
+#         for i in range(n-l+1):
+#             j = i + l - 1
+#             print(f"l: {l} i:{i} j:{j}")
+
+def coin_change(coins:List[int],amount:int)->int:
+
+    need = [amount + 1] * (amount + 1)
+    
+    # base case 0 no coins needed for amount 0
+    need[0] = 0
+    for i in range(1,len(need)):
+        for c in coins:
+            need[i] = min(need[i],need[i - c] +1)
+    return need[amount] if need[amount] != amount+1 else -1
+
+
+
 
 # move_diagonally(5)
 # print(longest_palindrome("baa"))
 # print(count_palindromic_substrings("abc"))
-print(decode_string_count("226"))
+# print(decode_string_count("226"))
+print(coin_change([1,2,5],11))
 
 
 
