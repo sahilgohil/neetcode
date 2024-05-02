@@ -237,6 +237,20 @@ if the previous character and current character makes an int 10< int < 26 then t
 
 at the end last value will be the answer
 
+SUDO Code
+n is the length of the string
+dp will have the lenght of the string plus 1 to accomodate for the empty string
+- base case each i represents the number of ways to decode the string of length i
+- i = 0 have only one way to decode it
+- i = 1 length of 1 string will have one way only if the char is not 0 else it has 0 ways
+- loop for the range of dp's lenght
+    - get the single digit of the string = s[i-1:i] we are deducting one more as the string is one index behind the dp
+    - get the double digit of the string = s[i-2:i] 
+    - check if the single digit is valid
+        - yes then add the value of dp[i-1]
+    - check is the double digit is valid
+        - yes then add the value of dp[i-2]
+return the last value of dp
 '''
 
 def decode_string_count(s:str)->int:
@@ -250,7 +264,7 @@ def decode_string_count(s:str)->int:
         twoDigits = int(s[i-2:i]) # we decrease 2 as i is running one step ahead of the string
 
         # checkign for single digit
-        if 0 <=singleDigit<=9:
+        if 0 <singleDigit<=9:
             dp[i] += dp[i-1]
 
         # checking for double digit
