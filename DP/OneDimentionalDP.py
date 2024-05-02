@@ -167,13 +167,21 @@ def house_robber2_bottom_up(nums):
 '''
 this is the problem where we find the solution of the smaller problem and then make our way upwards to the bigger problem,
 
-there are three things to keep in mind when approaching this problem
+there are four things to keep in mind when approaching this problem
 
 1 - all the single characters are palindrome
 2 - looping will happen diagonally, hence the most outer loop will run from 2 to length of the string, it determines the size of the substring being evaluated
 3 - internal looping for i and is dynamic , it will loop from 0 to end index of string but the calculation will be n(total lenght of the string) - l (lenght of the substring) 
-4 - j is the last index of the substring,  
+4 - j is the last index of the substring, which is a dynamic value , easy to calculate, = i (1st index of the substring) + l (length of the substring) - 1 [we decrease one as j is an index]
 
+SUDO Code
+- n is the length of the string
+- dp is boolean matrix of n x n with false values as start with
+- start, end are the indexes of the longest palindromic substrings
+- loop for substring starting from 2 all the way to the length of the string + 1 as we want to include all possible lengths the substrings
+    - loop for strating index i from 0 to n-l+1 so that it includes all the indexes
+        - j will be the last index of the current substring i + l - 1
+        - if the value of substring at i and j are same and its either length 2, or its innner string is a palindrome then put the value at i, j as True
 '''
 def longest_palindrome(s:str)-> str:
     n = len(s) # length of the string
