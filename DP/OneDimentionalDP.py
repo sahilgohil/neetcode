@@ -132,40 +132,42 @@ use the helper function to get the dp without the first house
 use the helper functuon to get the dp without the last house
 return the maximum of the two dp
 
-Top-Down approach
-
+Top-Down approach is not possible for this problem (more complex than the bottom up (tabulation))
 """
-def house_robber2_bottom_up(houses):
-    n = len(houses)
-    def helper(start, end):
-        dp = [0]*n
-        dp[start] = houses[start]
-        dp[start+1] = max(houses[start], houses[start+1])
 
-        for i in range(start+2,end+1):
-            dp[i] = max(houses[i]+dp[i-2], dp[i-1])
-        return dp
-    dp1 = helper(1,n-1) # remove first house
-    dp2 = helper(0,n-2) # remove the last house
-    return max(dp1[n-1], dp2[n-2])
-def house_robber2_top_down(houses):
+def house_robber2_bottom_up(nums):
+    '''
+        this problem requires the bottom-up or tabulaation approach to dp
+
+        need a helper function (n is the number of houses)
+        first leave the first house and fill the dp from 1 to n-1 
+        then leave the last house and fill the dp from 0 to n-2
+        after getting both tables we will get the maximum of the both the tables last values n-1 and n-2
+        that will be our answer
+    '''
+    n = len(nums)
+    if n == 0:
+        return 0
+    if n == 1:
+        return nums[0]
+    if n == 2:
+        return max(nums[0],nums[1])
     def helper(start, end):
-        cache = {}
-        def recursion(start, idx):
-            if idx < start and start == 0:
-                return 0
-            if idx < start and start == 1:
-                return houses[0]
-            if idx in cache:
-                return cache[idx]
+            dp = [0] * n
+            dp[start]  = nums[start]
+            dp[start+1] = max(nums[start], nums[start+1])
+
+            for i in range(start +2, end+1):
+                dp[i] = max(nums[i] + dp[i-2], dp[i-1])
+            return dp
+    dp_first_leave = helper(1,n-1)
+    dp_leave_last = helper(0,n-2)
+    return max(dp_first_leave[n-1], dp_leave_last[n-2])
+
+
+            
+
         
-            cache[idx] = max(houses[idx] + recursion(start, idx-2), recursion(start, idx-1))
-            return cache[idx]
-        return cache
-    cache1 = helper(1, len(houses)-1)
-    cache2 = helper(0, len(houses)-2)
-
-    return max(cache1[len(houses-1)], cache2[len(houses-2)])
         
 
 
@@ -176,7 +178,6 @@ def house_robber2_top_down(houses):
 # print(house_robing_bottom_up([2,7,9,3,1]))
 
 print(house_robber2_bottom_up([2,3,2]))
-print(house_robing_top_down([2,3,2]))
 
 
         
