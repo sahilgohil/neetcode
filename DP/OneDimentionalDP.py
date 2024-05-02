@@ -282,7 +282,12 @@ def decode_string_count(s:str)->int:
 #         for i in range(n-l+1):
 #             j = i + l - 1
 #             print(f"l: {l} i:{i} j:{j}")
-
+'''
+This problem requires
+- creating array of length amount + 1 to accomodate for amount 0
+- at every step of the array we are filling the default value of amount + 1
+- at every iteration of the array we loop through the coins and put min of the value at that place or [amount - coin] +1
+'''
 def coin_change(coins:List[int],amount:int)->int:
 
     need = [amount + 1] * (amount + 1)
@@ -291,7 +296,8 @@ def coin_change(coins:List[int],amount:int)->int:
     need[0] = 0
     for i in range(1,len(need)):
         for c in coins:
-            need[i] = min(need[i],need[i - c] +1)
+            if c <= i:
+                need[i] = min(need[i],need[i - c] +1)
     return need[amount] if need[amount] != amount+1 else -1
 
 
