@@ -164,7 +164,17 @@ def house_robber2_bottom_up(nums):
     dp_leave_last = helper(0,n-2)
     return max(dp_first_leave[n-1], dp_leave_last[n-2])
 
+'''
+this is the problem where we find the solution of the smaller problem and then make our way upwards to the bigger problem,
 
+there are three things to keep in mind when approaching this problem
+
+1 - all the single characters are palindrome
+2 - looping will happen diagonally, hence the most outer loop will run from 2 to length of the string, it determines the size of the substring being evaluated
+3 - internal looping for i and is dynamic , it will loop from 0 to end index of string but the calculation will be n(total lenght of the string) - l (lenght of the substring) 
+4 - j is the last index of the substring,  
+
+'''
 def longest_palindrome(s:str)-> str:
     n = len(s) # length of the string
     dp = [[False] * n for _ in range(n)]
