@@ -201,6 +201,63 @@ def longest_palindrome(s:str)-> str:
                     
     return s[start:end+1]
 
+'''
+count the number of palindromic substrings
+we use the same method as above and keep the counter variable
+let's see if we can solve this problem
+'''
+
+def count_palindromic_substrings(s:str)->int:
+    n = len(s)
+    count = n
+
+    dp = [[False] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = True
+    
+    for l in range(2, n+1):
+        for i in range(n-l+1):
+            j = i+l-1
+            if s[i] == s [j]:
+                if l == 2 or dp[i+1][j-1]:
+                    count = count +1
+                    dp[i][j] = True
+
+    return count
+
+'''
+decoding a string into number of ways
+using the bottom up approach to the problem solving
+if the string is empty then there is only one way to decode it
+if the string's first character is 0 then there is no way else there is only one way to decode it
+
+then we have two possibilities for the rest of the characters
+if the previous character and current character makes an int 0 < int < then there can only be same ways as the previous place
+if the previous character and current character makes an int 10< int < 26 then the string is double digit and the ways to decode is two char before
+
+at the end last value will be the answer
+
+'''
+
+def decode_string_count(s:str)->int:
+    n = len(s)
+    dp = [0] * (n+1) # as we need to keep track of the empty string
+    dp[0] = 1 # only one way to decode empty string
+    dp[1] = 1 if s[0] != '0' else 0
+
+    for i in range(2, len(dp)):
+        singleDigit = int(s[i-1:i])
+        twoDigits = int(s[i-2:i]) # we decrease 2 as i is running one step ahead of the string
+
+        # checkign for single digit
+        if 0 <=singleDigit<=9:
+            dp[i] += dp[i-1]
+
+        # checking for double digit
+        if 10<= twoDigits<=26:
+            dp[i] += dp[i-2]
+    return dp[-1]
+
 
 def move_diagonally(n):
     # n = 5
@@ -210,7 +267,9 @@ def move_diagonally(n):
             print(f"l: {l} i:{i} j:{j}")
 
 # move_diagonally(5)
-print(longest_palindrome("baa"))
+# print(longest_palindrome("baa"))
+# print(count_palindromic_substrings("abc"))
+print(decode_string_count("226"))
 
 
 
