@@ -165,6 +165,37 @@ def house_robber2_bottom_up(nums):
     return max(dp_first_leave[n-1], dp_leave_last[n-2])
 
 
+def longest_palindrome(s:str)-> str:
+    n = len(s) # length of the string
+    dp = [[False] * n for _ in range(n)]
+
+    for i in range(n):
+        dp[i][i] = True # all single characters are the palindrome
+    start, end = 0,0
+    for l in range(2, n+1): # lenght of substring 2,3,4 ...
+        for i in range(n-l+1):
+            j = i+l-1
+            if s[i] == s[j]:
+                if l == 2 or dp[i+1][j-1]:
+                    dp[i][j] = True
+                    if j-i > end - start:
+                        start, end = i ,j
+                    
+    return s[start:end+1]
+
+
+def move_diagonally(n):
+    # n = 5
+    for l in range(2, n + 1):
+        for i in range(n-l+1):
+            j = i + l - 1
+            print(f"l: {l} i:{i} j:{j}")
+
+# move_diagonally(5)
+print(longest_palindrome("baa"))
+
+
+
             
 
         
@@ -177,7 +208,7 @@ def house_robber2_bottom_up(nums):
 # print(min_cost_climbing_stairs_top_down([10,15,20]))
 # print(house_robing_bottom_up([2,7,9,3,1]))
 
-print(house_robber2_bottom_up([2,3,2]))
+# print(house_robber2_bottom_up([2,3,2]))
 
 
         
