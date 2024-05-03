@@ -216,6 +216,15 @@ def maxProduct(nums:List[int])->int:
 # print(maxProduct([2,3,-2,4]))
 # print(maxProduct([-2,0,-1]))
 
+'''
+this problem requires a wordset
+create a dp of length of the string plus 1 with default value to be boolean
+base case empty string will always be in word break = True
+loop from 1 to end of dp
+    then loop every substring till i
+     check if the substring is already true and from j to i is in the word break then we put true
+return the last value
+'''
 # wordbreak
 def wordBreak(s: str, wordDict: List[str]) -> bool:
     n = len(s)
@@ -230,6 +239,9 @@ def wordBreak(s: str, wordDict: List[str]) -> bool:
     return dp[-1]
 # print(wordBreak("catsandog", ["cats","dog","sand","and","cat"]))
 
+'''
+
+'''
 # longest increasing subsequence
 def lengthOfLIS( nums: List[int]) -> int:
     n = len(nums)
