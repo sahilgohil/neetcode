@@ -170,5 +170,24 @@ def decodeWays(s:str)->int:
             dp[i] += dp[i-2] # the ways to decode are same as one before previous
 
     return dp[-1]
-print(decodeWays("223"))
+# print(decodeWays("223"))
+
 # coin change
+'''
+You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
+
+Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
+
+You may assume that you have an infinite number of each kind of coin.
+'''
+
+def coinChange(coins:List[int], amount:int)->int:
+    need = [amount + 1] * (amount + 1)
+    need[0] = 0 # 0 coins are required for 0 amount
+    for a in range(1, len(need)):
+        for c in coins:
+            if c<= a:
+                need[a] = min(need[a], need[a-c] + 1)
+    
+    return need[amount] if need[amount] != amount +1 else -1
+print(coinChange([1,2,5], 11))
