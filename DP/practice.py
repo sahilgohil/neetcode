@@ -240,7 +240,7 @@ def wordBreak(s: str, wordDict: List[str]) -> bool:
 # print(wordBreak("catsandog", ["cats","dog","sand","and","cat"]))
 
 '''
-
+we check if the current num is less than the 
 '''
 # longest increasing subsequence
 def lengthOfLIS( nums: List[int]) -> int:
