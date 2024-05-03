@@ -424,6 +424,29 @@ def lengthOfLIS( nums: List[int]) -> int:
                 dp[i] = max(dp[i], dp[j] +1)
     return max(dp)
 
+'''
+Problem - Pratition the array into two subarrays of equal sum
+
+in this problem we have to sum all the elements first
+if the sum is odd then return false as we can't partition the arrays
+if the sum is even then find the subarraysumtarget value by dividing the sum into two parts
+now we are ready to create a dp of,
+    row length as length of nums + 1 to accomodate the sum 0
+
+    column length as length of subset_sum + 1 to accomodate the sum 0
+
+    loop from row 1 and column 1
+    check for two conditions
+    1 - if the current element in the nums array is less than or equal to the sum j
+        then check either
+        1 - include the current num
+        2 - exclude the current num
+        put the true if any one of the above condition is true
+    2 - else
+        just put the value of the sum as it is from the previous row 
+at the end return the last element as the answer
+'''
+
 # print(lengthOfLIS([10,9,2,5,3,7,101,18]))
 # print(lengthOfLIS([7,7,7,7,7,7,7]))
 # move_diagonally(5)
