@@ -132,6 +132,43 @@ def palindromeCount(s:str)->int:
                     count = count +1
 
     return count
-print(palindromeCount("abc"))
+# print(palindromeCount("abc"))
+
 # decode ways
+'''
+A message containing letters from A-Z can be encoded into numbers using the following mapping:
+
+'A' -> "1"
+'B' -> "2"
+...
+'Z' -> "26"
+To decode an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above (there may be multiple ways). For example, "11106" can be mapped into:
+
+"AAJF" with the grouping (1 1 10 6)
+"KJF" with the grouping (11 10 6)
+
+to solve this problem we will use the dp bottom up approach
+we will have two base cases,
+1 - if the string is empty then there is only one way to decode it
+2 - if the string's first char is not 0 then one way else 0 ways
+then for each char we have to find out if the char is non zero and the two digit forms a valid number and add both together
+'''
+
+def decodeWays(s:str)->int:
+    n = len(s)
+    dp = [0] * (n+1) # as we have additional case for string beign empty
+    dp[0] = 1
+    dp[1] = 1 if s[0] != '0' else 0
+
+    for i in range(2, len(dp)):
+        singleDigit = int(s[i-1:i])
+        doubleDigit = int(s[i-2:i])
+
+        if 0< singleDigit <=9:
+            dp[i] += dp[i-1] # the ways to decode are same as previous
+        if 10 <= doubleDigit <= 26:
+            dp[i] += dp[i-2] # the ways to decode are same as one before previous
+
+    return dp[-1]
+print(decodeWays("223"))
 # coin change
