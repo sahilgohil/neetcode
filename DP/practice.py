@@ -240,6 +240,31 @@ def lengthOfLIS( nums: List[int]) -> int:
             if nums[j] < nums[i]:
                 dp[i] = max(dp[i], dp[j] + 1) # maximum of the current value and the value of length till j plus one for current element addition
     return max(dp)
-print(lengthOfLIS([10,9,2,5,3,7,101,18]))
+# print(lengthOfLIS([10,9,2,5,3,7,101,18]))
+
 # partition
+def partition(nums:List[int])->bool:
+    r = len(nums) + 1
+    total = sum(nums)
+    if total % 2 != 0:
+        return False
+    target_sum = total // 2
+    c = target_sum + 1
+    dp = [[False] * (c) for _ in range(r)]
+    # for the base case we want the first column to be true
+    for i in range(r):
+        dp[i][0] = True
+
+    for i in range(1, r):
+        for j in range(1, c):
+            if nums[i-1] <= j:
+                option1 = dp[i-1][j-nums[i-1]] # include the sum
+                option2 = dp[i-1][j] # not include the sum
+                dp[i][j] = option1 or option2
+            else:
+                dp[i][j] = dp[i-1][j]
+    return dp[-1][-1]
+print(partition([1,5,11,5]))
+print(partition([1,2,3,5]))
+
 
