@@ -26,6 +26,7 @@ def compareVersion( version1: str, version2: str) -> int:
             return -1
     return 0
 
+# May 2 2024
 '''
 2441. Largest Positive Integer That Exists With Its Negative
 we create a set of the list
@@ -47,6 +48,8 @@ def findMaxK(nums: List[int]) -> int:
 
 # print(findMaxK([-1,2,-3,3]))
 
+
+# May 1 2024
 '''
 2000. Reverse Prefix of Word
 to solve this problem we will first get the first index of the character c

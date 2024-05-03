@@ -74,7 +74,7 @@ def houseRobber2(money:List[int])->int:
     money_without_first = helper(1,n-1)
     money_without_last = helper(0,n-2)
     return max(money_without_first[n-1], money_without_last[n-2])
-print(houseRobber2([2,3,2]))
+# print(houseRobber2([2,3,2]))
 
 # longest palindromic substring
 '''
@@ -190,4 +190,33 @@ def coinChange(coins:List[int], amount:int)->int:
                 need[a] = min(need[a], need[a-c] + 1)
     
     return need[amount] if need[amount] != amount +1 else -1
-print(coinChange([1,2,5], 11))
+# print(coinChange([1,2,5], 11))
+
+
+# maxproduct
+'''
+first keep the var maxProductSofar
+then currentMax at the index
+then currentMin at the index
+initialize all the above three with value of the first element
+loop from i to end
+'''
+def maxProduct(nums:List[int])->int:
+    max_product_so_far = nums[0]
+    current_max = nums[0]
+    current_min = nums[0]
+
+    for i in range(1, len(nums)):
+        tempMax = max(nums[i], current_max * nums[i], current_min * nums[i])
+        current_min = min(nums[i], current_max * nums[i], current_min * nums[i])
+        current_max = tempMax
+
+        max_product_so_far = max(max_product_so_far, current_max)
+    return max_product_so_far
+print(maxProduct([2,3,-2,4]))
+print(maxProduct([-2,0,-1]))
+
+# wordbreak
+# longest increasing subsequence
+# partition
+
