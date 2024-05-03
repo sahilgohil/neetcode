@@ -310,7 +310,33 @@ def coin_change(coins:List[int],amount:int)->int:
     return need[amount] if need[amount] != amount+1 else -1
 
 
+'''
+MAX product of the subarray 
 
+this problem can be solved using the dynamic programming bottom up approach
+we maintain three things,
+1 - maximum product so far
+2 - current max product
+3 - current min product
+at each iteration we will find the maximum product by multiplying the current value with the current max and current min this will accomodate for any negative values
+at the end we will update the maximum and minimum products 
+return the result using the maximum product so far.
+'''
+
+def maxProduct(nums:List[int])->int:
+    maxSoFar = nums[0]
+    currentMax = nums[0]
+    currentMin = nums[0]
+
+    for i in range(1, len(nums)):
+        num = nums[i]
+        tempMax = max(num, currentMax * num, currentMin * num)
+        currentMin = min(num, currentMax * num, currentMin * num)
+        currentMax = tempMax
+
+        maxSoFar = max(maxSoFar, currentMax)
+    return maxSoFar
+print(maxProduct([2,3,-2,4]))
 
 # move_diagonally(5)
 # print(longest_palindrome("baa"))
