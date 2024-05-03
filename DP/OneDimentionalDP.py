@@ -351,7 +351,7 @@ def maxProduct(nums:List[int])->int:
 
         maxSoFar = max(maxSoFar, currentMax)
     return maxSoFar
-print(maxProduct([2,3,-2,4]))
+# print(maxProduct([2,3,-2,4]))
 
 '''
 Problem - Word Break
@@ -391,6 +391,31 @@ def wordBreak(s: str, wordDict: List[str]) -> bool:
     return dp[-1]
 # print(wordBreak("catsandog", ["cats","dog","sand","and","cat"]))
 
+'''
+Problem - Longest Increasing subsequence
+ this problem we will solve with dp
+ we will have a dp of length n where n is the length of the nums array given
+ we will put the default value of 1 as it is the minimum lenght of the longest subsequence array
+ now we will loop though each index,
+    for that index we will check from 0 till that index,
+        if we found that element at j is less than the element at i then,
+        we can puth the max of the current value of length and the value at j plus 1 for the current element addition in the subsequence
+
+finally we will return the max(dp) that will be the max value in the dp array
+'''
+
+def lengthOfLIS( nums: List[int]) -> int:
+    n = len(nums)
+    dp = [1] * n
+
+    for i in range(n):
+        for j in range(i):
+            if nums[j] < nums [i]:
+                dp[i] = max(dp[i], dp[j] +1)
+    return max(dp)
+
+print(lengthOfLIS([10,9,2,5,3,7,101,18]))
+print(lengthOfLIS([7,7,7,7,7,7,7]))
 # move_diagonally(5)
 # print(longest_palindrome("baa"))
 # print(count_palindromic_substrings("abc"))
