@@ -363,6 +363,17 @@ for each length of the substring we will check two things,
 
  if both the conditions are met then we will consider that the substring can be segmented and put true to the dp array
  and we will return the last values as our answer
+
+ SUDO Code
+ convert the word dictionary into wordset for faster lookup
+ create a dp with length of s plus 1 to accomodate for the empty string
+ apply base case for string 0 to true
+ loop as i from 1 to dp's length
+    loop from 0 to i
+        if the dp[j] is true and substring from j to i is in the word set then 
+            make the current value true in dp
+return the last value of dp as answer
+
 '''
 
 def wordBreak(s: str, wordDict: List[str]) -> bool:
@@ -378,7 +389,7 @@ def wordBreak(s: str, wordDict: List[str]) -> bool:
 
 
     return dp[-1]
-print(wordBreak("catsandog", ["cats","dog","sand","and","cat"]))
+# print(wordBreak("catsandog", ["cats","dog","sand","and","cat"]))
 
 # move_diagonally(5)
 # print(longest_palindrome("baa"))
