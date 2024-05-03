@@ -321,6 +321,18 @@ we maintain three things,
 at each iteration we will find the maximum product by multiplying the current value with the current max and current min this will accomodate for any negative values
 at the end we will update the maximum and minimum products 
 return the result using the maximum product so far.
+
+SUDO Code
+maxsofar, currentmax,currentmin initialize with first element
+
+loop from first element to the end of the array
+    get the current array element
+    keep temporary max of current eleemnt, currentmax * currentelement, currentmin * currentelement
+    change the currentmin using the min function for above three values
+    change the currentmax to temp max
+    update the maxsofar using the current max
+return the max sofar
+
 '''
 
 def maxProduct(nums:List[int])->int:
