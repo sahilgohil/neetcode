@@ -213,10 +213,23 @@ def maxProduct(nums:List[int])->int:
 
         max_product_so_far = max(max_product_so_far, current_max)
     return max_product_so_far
-print(maxProduct([2,3,-2,4]))
-print(maxProduct([-2,0,-1]))
+# print(maxProduct([2,3,-2,4]))
+# print(maxProduct([-2,0,-1]))
 
 # wordbreak
+def wordBreak(s: str, wordDict: List[str]) -> bool:
+    n = len(s)
+    wordSet = set(wordDict)
+    dp = [False] * (n+1)
+    dp[0] = True # empty string can be segmented
+
+    for i in range(1, len(dp)):
+        for j in range(i):
+            if dp[j] and s[j:i] in wordSet:
+                dp[i] = True
+    return dp[-1]
+# print(wordBreak("catsandog", ["cats","dog","sand","and","cat"]))
+
 # longest increasing subsequence
 # partition
 
