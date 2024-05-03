@@ -75,7 +75,41 @@ def houseRobber2(money:List[int])->int:
     money_without_last = helper(0,n-2)
     return max(money_without_first[n-1], money_without_last[n-2])
 print(houseRobber2([2,3,2]))
+
 # longest palindromic substring
+'''
+Given a string s, return the longest 
+palindromic
+ 
+substring
+ in s.
+
+ classic dp problem,
+ all single will be palindrome
+ all 2 char is palindrome if both char are same
+ threee or more are palindrome if char at both ends are same and the substring is palindrome
+ that is it
+ keep track of the longest string's starting and ending index
+ that is the result
+'''
+def longestPalindrome(s:str)->str:
+    n = len(s)
+    dp = [[False] * n for _ in range(n)]
+
+    for i in range(n):
+        dp[i][i] = True
+    start, end = 0,0
+    for l in range(2, n+1):
+        for i in range(n-l +1):
+            j = i+l-1
+            if s[i] == s[j]:
+                if l == 2 or dp[i+1][j-1]:
+                    dp[i][j]= True
+                    if j-i > end - start:
+                        start, end = i, j
+
+    return s[start:end+1]
+print(longestPalindrome("babad"))
 # count the palindromic substrings
 # decode ways
 # coin change
