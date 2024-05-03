@@ -402,6 +402,16 @@ Problem - Longest Increasing subsequence
         we can puth the max of the current value of length and the value at j plus 1 for the current element addition in the subsequence
 
 finally we will return the max(dp) that will be the max value in the dp array
+
+SUDO Code
+n is the length of the given nums array
+create a dp array of length n with its default value being 1
+loop i from 0 to dp's length
+    loop j from 0 to i
+        if element at j is less than the element at i in nums array than it can be includeed in the increasing subsequence array
+            put dp's ith index max of current value at i and value at j plus 1 for the current element inclusion in the array
+
+reutrn the max value of the dp array as the answer
 '''
 
 def lengthOfLIS( nums: List[int]) -> int:
@@ -414,8 +424,8 @@ def lengthOfLIS( nums: List[int]) -> int:
                 dp[i] = max(dp[i], dp[j] +1)
     return max(dp)
 
-print(lengthOfLIS([10,9,2,5,3,7,101,18]))
-print(lengthOfLIS([7,7,7,7,7,7,7]))
+# print(lengthOfLIS([10,9,2,5,3,7,101,18]))
+# print(lengthOfLIS([7,7,7,7,7,7,7]))
 # move_diagonally(5)
 # print(longest_palindrome("baa"))
 # print(count_palindromic_substrings("abc"))
