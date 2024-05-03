@@ -47,8 +47,34 @@ def houseRobber(money:List[int])->int:
     for i in range(2, n):
         dp[i] = max(money[i] + dp[i-2], dp[i-1])
     return dp[-1]
-print(houseRobber([1,2,3,1]))
+# print(houseRobber([1,2,3,1]))
+
 # house robber 2
+'''
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle. That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police if two adjacent houses were broken into on the same night.
+
+Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+here we have to find the maximum money twice,
+ first without house 1
+ second without house last
+ this way we will save from looting house 1 and last at the same time
+ and then the answer will the max of both the results
+
+'''
+def houseRobber2(money:List[int])->int:
+    n = len(money)
+    def helper(start, end):
+        dp = [0] * n
+        dp[start] = money[start]
+        dp[start + 1] = max(money[start], money[start + 1])
+        for i in range(start + 2, n ):
+            dp[i] = max(dp[i-2] + money[i], dp[i-1])
+        return dp
+    money_without_first = helper(1,n-1)
+    money_without_last = helper(0,n-2)
+    return max(money_without_first[n-1], money_without_last[n-2])
+print(houseRobber2([2,3,2]))
 # longest palindromic substring
 # count the palindromic substrings
 # decode ways
