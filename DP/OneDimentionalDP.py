@@ -336,6 +336,9 @@ return the max sofar
 '''
 
 def maxProduct(nums:List[int])->int:
+    n = len(nums)
+    if n == 1:
+        return nums[0]
     maxSoFar = nums[0]
     currentMax = nums[0]
     currentMin = nums[0]
@@ -349,6 +352,33 @@ def maxProduct(nums:List[int])->int:
         maxSoFar = max(maxSoFar, currentMax)
     return maxSoFar
 print(maxProduct([2,3,-2,4]))
+
+'''
+Problem - Word Break
+to solve this problem we will maintain a dp of lenght one greater than the lenght of the string to accomodate for the empty string
+
+for each length of the substring we will check two things,
+ 1 - if the subtring's part from 0 to j is can be segmentable 
+ 2 - if the substring's part from j to i is in the word dictionary
+
+ if both the conditions are met then we will consider that the substring can be segmented and put true to the dp array
+ and we will return the last values as our answer
+'''
+
+def wordBreak(s: str, wordDict: List[str]) -> bool:
+    n = len(s)
+    wordSet = set(wordDict)
+    dp = [False] * (n+1) # to accomodate for the empty string
+    dp[0] = True # as empty string can always be segmented to anything
+
+    for i in range(1, len(dp)):
+        for j in range(i):
+            if dp[j] and s[j:i] in wordSet:
+                dp[i] = True
+
+
+    return dp[-1]
+print(wordBreak("catsandog", ["cats","dog","sand","and","cat"]))
 
 # move_diagonally(5)
 # print(longest_palindrome("baa"))
