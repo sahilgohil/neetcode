@@ -10,6 +10,9 @@ return the last cell
 
 '''
 
+from typing import List
+
+
 def uniquePaths(m: int, n: int) -> int:
     dp = [[1] * n for _ in range(m)] # initialise with 1 for the base cases
 
@@ -40,3 +43,30 @@ def longestCommonSubsequence(text1: str, text2: str) -> int:
             else:
                 dp[i][j] = max(dp[i-1][j], dp[i][j-1])
     return dp[-1][-1]
+
+
+'''
+Best Time to Buy and Sell Stock with Cooldown
+
+there are three states that we need to keep track of
+1 dpbuy = have the max profit at ith day if we by the stock
+2 dpsell = have the max profit at the ith day if we sell the stock
+3 dpcooldown = have the max profit at the ith day if we cooldown
+
+return the max of sell, cooldown
+
+'''
+
+def maxProfit(prices: List[int]) -> int:
+    n = len(prices)
+    dpBuy = [0] * n
+    dpSell = [0] * n
+    dpCooldown = [0] * n
+    dpBuy[0] = -prices[0] # profit at the day 0 will be negative as we just bought the stock
+    for i in range(1, n):
+        dpBuy[i] = max(dpBuy[i-1], dpCooldown[i-1] - prices[i]) # either previous buy or buy from cooldown
+        dpSell[i] = dpBuy[i-1] + prices[i] # sell the stock using the previous buy price (note buy price is already negative)
+        dpCooldown[i] = max(dpCooldown[i-1], dpSell[i-1]) # cooldown will have max profit after selling or previous cooldown
+
+    return max(dpSell[-1],dpCooldown[-1])
+print(maxProfit([1,2,3,0,2]))
