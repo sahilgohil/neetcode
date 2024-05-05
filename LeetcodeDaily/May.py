@@ -70,3 +70,8 @@ def reversePrefix(word: str, ch: str) -> str:
         return reversedString
     return reversedString+word[idx+1:]
 print(reversePrefix("abccd",'c'))
+
+# May 4 2024
+'''
+
+'''
