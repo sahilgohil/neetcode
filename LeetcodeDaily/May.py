@@ -75,3 +75,41 @@ print(reversePrefix("abccd",'c'))
 '''
 
 '''
+# May 8 2024
+'''
+Double the linked list
+
+first we reverse the linked list
+then we uset the carry method to calculate the double at each node
+last we we have carry then we add it as a node
+return the reversed list again as the answer
+'''
+class Solution:
+    def doubleIt(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head:
+            return None
+        head = self.reverseList(head)
+
+        carry = 0
+        curr = head
+        while curr:
+            curr.val = curr.val * 2 + carry
+            carry = curr.val // 10
+            curr.val = curr.val%10
+
+            if carry and curr.next is None:
+                curr.next = ListNode(carry)
+                break
+            curr = curr.next
+        return self.reverseList(head)
+
+
+    def reverseList(self, head):
+        prev, curr = None, head
+
+        while curr:
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        return prev
