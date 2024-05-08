@@ -212,17 +212,49 @@ initialize all the above three with value of the first element
 loop from i to end
 '''
 def maxProduct(nums:List[int])->int:
-    max_product_so_far = nums[0]
-    current_max = nums[0]
-    current_min = nums[0]
+    max_so_far = nums[0]
+    c_max = nums[0]
+    c_min = nums[0]
 
     for i in range(1, len(nums)):
-        tempMax = max(nums[i], current_max * nums[i], current_min * nums[i])
-        current_min = min(nums[i], current_max * nums[i], current_min * nums[i])
-        current_max = tempMax
+        temp_max = max(nums[i], nums[i] * c_max, nums[i]*c_min)
+        c_min = min(nums[i], nums[i] * c_max, nums[i]*c_min)
+        c_max = temp_max
 
-        max_product_so_far = max(max_product_so_far, current_max)
-    return max_product_so_far
+        max_so_far = max(c_max,max_so_far)
+    return max_so_far
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # max_product_so_far = nums[0]
+    # current_max = nums[0]
+    # current_min = nums[0]
+
+    # for i in range(1, len(nums)):
+    #     tempMax = max(nums[i], current_max * nums[i], current_min * nums[i])
+    #     current_min = min(nums[i], current_max * nums[i], current_min * nums[i])
+    #     current_max = tempMax
+
+    #     max_product_so_far = max(max_product_so_far, current_max)
+    # return max_product_so_far
 # print(maxProduct([2,3,-2,4]))
 # print(maxProduct([-2,0,-1]))
 
