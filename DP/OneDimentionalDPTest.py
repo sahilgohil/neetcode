@@ -1,5 +1,5 @@
 from OneDimentionalDP import climbing_stairs
-from practice import minCostClimbingStairs, houseRobber, houseRobber2
+from practice import minCostClimbingStairs, houseRobber, houseRobber2, longestPalindrome
 import unittest
 
 class TestClimbingStairs(unittest.TestCase):
@@ -14,4 +14,6 @@ class TestClimbingStairs(unittest.TestCase):
         self.assertEqual(houseRobber([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 30)
     def test_house_robber_2(self):
         self.assertEqual(houseRobber2([2,3,2]),3)
+    def test_longest_palindromic_substring(self):
+        self.assertEqual(longestPalindrome("cbbd"),"bb")
 unittest.main()

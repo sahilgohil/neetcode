@@ -101,21 +101,21 @@ substring
  that is the result
 '''
 def longestPalindrome(s:str)->str:
+    # requires matrix dp
     n = len(s)
     dp = [[False] * n for _ in range(n)]
 
     for i in range(n):
         dp[i][i] = True
-    start, end = 0,0
-    for l in range(2, n+1):
-        for i in range(n-l +1):
-            j = i+l-1
+    start,end = 0,0
+    for l in range(2, n+1): # for substring of length starting from 2 to n
+        for i in range(n-l+1): # starting index of the substring 0 to n-1
+            j = l+i-1 # index of the last char in the substring
             if s[i] == s[j]:
                 if l == 2 or dp[i+1][j-1]:
-                    dp[i][j]= True
-                    if j-i > end - start:
-                        start, end = i, j
-
+                    dp[i][j] = True
+                    if j-i>end-start:
+                        start,end = i,j
     return s[start:end+1]
 # print(longestPalindrome("babad"))
 
