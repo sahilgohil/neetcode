@@ -107,3 +107,18 @@ def change(amount: int, coins: List[int]) -> int:
     return dp[amount]
 
 print(change(5, [1,2,5]))
+
+'''
+Target sum with combinations 
+'''
+def findTargetSumWays(nums: List[int], target: int) -> int:
+    cache = {} #(index,total) -> number of ways
+    def backtrack(i,total):
+        # basecase if we reach at the last index
+        if(i == len(nums)):
+            return 1 if total == target else 0
+        if (i,total) in cache:
+            return cache[(i, total)]
+        cache[(i,total)] = (backtrack(i+1,total+nums[i]) + backtrack(i+1,total-nums[i]))
+        return cache[(i,total)]
+    return backtrack(0,0)

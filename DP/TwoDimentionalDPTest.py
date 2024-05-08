@@ -1,5 +1,6 @@
 import unittest
 from TDDPractice import uniquePaths,longestCommonSubsequence,maxProfit,change
+from TwoDimentionalDP import findTargetSumWays
 
 class TestTwoDimentionalDP(unittest.TestCase):
     def test_uniqpaths(self):
@@ -10,4 +11,6 @@ class TestTwoDimentionalDP(unittest.TestCase):
         self.assertEqual(maxProfit([1,2,3,0,2]),3)
     def test_change(self):
         self.assertEqual(change(5 , [1,2,5]),4)
+    def test_targetSumWays(self):
+        self.assertEqual(findTargetSumWays([1,1,1,1,1],3),5)
 unittest.main()
