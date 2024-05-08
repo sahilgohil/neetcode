@@ -179,39 +179,6 @@ def decodeWays(s:str)->int:
     return dp[-1]
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # n = len(s)
-    # dp = [0] * (n+1) # as we have additional case for string beign empty
-    # dp[0] = 1
-    # dp[1] = 1 if s[0] != '0' else 0
-
-    # for i in range(2, len(dp)):
-    #     singleDigit = int(s[i-1:i])
-    #     doubleDigit = int(s[i-2:i])
-
-    #     if 0< singleDigit <=9:
-    #         dp[i] += dp[i-1] # the ways to decode are same as previous
-    #     if 10 <= doubleDigit <= 26:
-    #         dp[i] += dp[i-2] # the ways to decode are same as one before previous
-
-    # return dp[-1]
 # print(decodeWays("223"))
 
 # coin change
@@ -224,14 +191,15 @@ You may assume that you have an infinite number of each kind of coin.
 '''
 
 def coinChange(coins:List[int], amount:int)->int:
-    need = [amount + 1] * (amount + 1)
-    need[0] = 0 # 0 coins are required for 0 amount
-    for a in range(1, len(need)):
+    dp = [amount+1] * (amount+1)
+    # base case
+    dp[0] = 0
+    for i in range (1, len(dp)):
         for c in coins:
-            if c<= a:
-                need[a] = min(need[a], need[a-c] + 1)
-    
-    return need[amount] if need[amount] != amount +1 else -1
+            if c<= i:
+                dp[i] = min(dp[i], dp[i-c] + 1) # here i need to find the min cost either current or the cost of previously made amount + using this coin
+    return dp[amount] if dp[amount] != (amount+1) else -1
+
 # print(coinChange([1,2,5], 11))
 
 
