@@ -73,13 +73,15 @@ def houseRobber2(money:List[int])->int:
     def helper(start, end):
         dp = [0] * n
         dp[start] = money[start]
-        dp[start + 1] = max(money[start], money[start + 1])
-        for i in range(start + 2, n ):
-            dp[i] = max(dp[i-2] + money[i], dp[i-1])
+        dp[start+1] = max(money[start], money[start+1])
+
+        for i in range(start+2, end+1):
+            dp[i] = max(money[i]+dp[i-2], dp[i-1])
         return dp
-    money_without_first = helper(1,n-1)
-    money_without_last = helper(0,n-2)
-    return max(money_without_first[n-1], money_without_last[n-2])
+    dp_without1 = helper(1,n-1)
+    dp_withoutlast = helper(0,n-2)
+    return max(dp_without1[n-1], dp_withoutlast[n-2])
+
 # print(houseRobber2([2,3,2]))
 
 # longest palindromic substring
