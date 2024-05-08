@@ -270,26 +270,61 @@ def lengthOfLIS( nums: List[int]) -> int:
 
 # partition
 def partition(nums:List[int])->bool:
-    r = len(nums) + 1
     total = sum(nums)
     if total % 2 != 0:
         return False
-    target_sum = total // 2
-    c = target_sum + 1
-    dp = [[False] * (c) for _ in range(r)]
-    # for the base case we want the first column to be true
-    for i in range(r):
-        dp[i][0] = True
-
-    for i in range(1, r):
-        for j in range(1, c):
-            if nums[i-1] <= j:
-                option1 = dp[i-1][j-nums[i-1]] # include the sum
-                option2 = dp[i-1][j] # not include the sum
-                dp[i][j] = option1 or option2
+    target_sum = total//2
+    n = len(nums) + 1
+    dp = [[False] * (target_sum+1) for i in range(n)]
+    for i in range(n):
+        dp[i][0] = True # for sum 0 we can always partition
+    
+    for idx in range(1, n):
+        for sm in range(1, target_sum+1):
+            if nums[idx-1] <= sm:
+                # two options either include the sum or not include the sum
+                option1 = dp[idx-1][sm-nums[idx-1]] # include the current element to makeup for the sum
+                option2 = dp[idx-1][sm] # do not inlcude the current element to makeup for the sum
+                dp[idx][sm] = option1 or option2
             else:
-                dp[i][j] = dp[i-1][j]
+                dp[idx][sm] = dp[idx-1][sm] # we just carry forward the previous answer
+
     return dp[-1][-1]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # r = len(nums) + 1
+    # total = sum(nums)
+    # if total % 2 != 0:
+    #     return False
+    # target_sum = total // 2
+    # c = target_sum + 1
+    # dp = [[False] * (c) for _ in range(r)]
+    # # for the base case we want the first column to be true
+    # for i in range(r):
+    #     dp[i][0] = True
+
+    # for i in range(1, r):
+    #     for j in range(1, c):
+    #         if nums[i-1] <= j:
+    #             option1 = dp[i-1][j-nums[i-1]] # include the sum
+    #             option2 = dp[i-1][j] # not include the sum
+    #             dp[i][j] = option1 or option2
+    #         else:
+    #             dp[i][j] = dp[i-1][j]
+    # return dp[-1][-1]
 # print(partition([1,5,11,5]))
 # print(partition([1,2,3,5]))
 

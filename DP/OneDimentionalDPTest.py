@@ -1,5 +1,5 @@
 from OneDimentionalDP import climbing_stairs
-from practice import minCostClimbingStairs, houseRobber, houseRobber2, longestPalindrome, decodeWays, coinChange, maxProduct, wordBreak, lengthOfLIS
+from practice import minCostClimbingStairs, houseRobber, houseRobber2, longestPalindrome, decodeWays, coinChange, maxProduct, wordBreak, lengthOfLIS, partition
 import unittest
 
 class TestClimbingStairs(unittest.TestCase):
@@ -26,4 +26,6 @@ class TestClimbingStairs(unittest.TestCase):
         self.assertEqual(wordBreak("leetcode", ["leet","code"]), True)
     def test_lengthOfLIS(self):
         self.assertEqual(lengthOfLIS([10,9,2,5,3,7,101,18]), 4)
+    def test_partition(self):
+        self.assertEqual(partition([1,5,11,5]),True)
 unittest.main()
