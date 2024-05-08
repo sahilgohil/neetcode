@@ -75,7 +75,7 @@ print(reversePrefix("abccd",'c'))
 '''
 
 '''
-# May 8 2024
+# May 7 2024
 '''
 Double the linked list
 
@@ -113,3 +113,29 @@ class Solution:
             prev = curr
             curr = nxt
         return prev
+    #May 8 2024
+    '''
+
+    '''
+    def findRelativeRanks(self, score: List[int]) -> List[str]:
+        reverseSorted = sorted(score,reverse=True)
+        maps = {}
+        for idx,item in enumerate(reverseSorted):
+            maps[item] = idx+1
+        result:List[str] = []
+        i = 0
+        for item in score:
+            if maps[item] == 1:
+                result[i] = "Gold Medal"
+            elif maps[item] == 2:
+                result[i] = "Silver Medal"
+            elif maps[item] == 3:
+                result[i] = "Bronze Medal"
+            else:
+                result[i] = str(maps[item])
+            i = i+1
+        return result
+        
+                
+        
+
