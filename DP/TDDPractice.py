@@ -59,3 +59,26 @@ def maxProfit(prices: List[int]) -> int:
         dpSell[i] = dpBuy[i-1] + prices[i]
         dpCooldown[i] = max(dpCooldown[i-1], dpSell[i-1])
     return max(dpSell[-1], dpCooldown[-1])
+
+
+'''
+You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
+
+Return the number of combinations that make up that amount. If that amount of money cannot be made up by any combination of the coins, return 0.
+
+You may assume that you have an infinite number of each kind of coin.
+
+The answer is guaranteed to fit into a signed 32-bit integer.
+'''
+
+def change(amount: int, coins: List[int]) -> int:
+    n = (amount+1)
+    dp = [0] * n
+    dp[0] = 1 # for amount 0 there are 1 combination by using no coins at all
+
+    for c in coins:
+        for a in range(c,n):
+            dp[a] +=dp[a - c]
+    return dp[amount]
+
+
