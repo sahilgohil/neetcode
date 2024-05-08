@@ -143,6 +143,8 @@ The interleaving is s1 + t1 + s2 + t2 + s3 + t3 + ... or t1 + s1 + t2 + s2 + t3 
 Note: a + b is the concatenation of strings a and b.
 '''
 def isInterleave(s1: str, s2: str, s3: str) -> bool:
+    if len(s1) + len(s2) != len(s3):
+        return False
     cache = {} # (idx1,idx2,strsofar)
     def backtracking(idx1,idx2):
         # if we reach the end of both the strings then we have the solution
@@ -158,3 +160,25 @@ def isInterleave(s1: str, s2: str, s3: str) -> bool:
         return cache[(idx1,idx2)]
     return backtracking(0,0)
         
+'''
+Longest increasing path in a matrix
+'''
+def longestIncreasingPath(matrix: List[List[int]]) -> int:
+    ROWS, COLS = len(matrix), len(matrix[0])
+    dp = {} #(r,c) -> LIP
+    def dfs(r,c,prevVal):
+        if (r<0 or r >= ROWS or c <0 or c >= COLS or matrix[r][c] <= prevVal):
+            return 0
+        if (r,c) in dp:
+            return dp[(r,c)]
+        res = 1
+        res = max(res, dfs(r+1,c,matrix[r][c])+1)
+        res = max(res, dfs(r-1,c,matrix[r][c])+1)
+        res = max(res, dfs(r,c+1,matrix[r][c])+1)
+        res = max(res, dfs(r,c-1,matrix[r][c])+1)
+        dp[(r,c)] = res
+        return dp[(r,c)]
+    for i in range(ROWS):
+        for j in range(COLS):
+            dfs(i,j,-1)
+    return max(dp.values())

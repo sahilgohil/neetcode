@@ -1,6 +1,6 @@
 import unittest
 from TDDPractice import uniquePaths,longestCommonSubsequence,maxProfit,change
-from TwoDimentionalDP import findTargetSumWays, isInterleave
+from TwoDimentionalDP import findTargetSumWays, isInterleave, longestIncreasingPath
 
 class TestTwoDimentionalDP(unittest.TestCase):
     def test_uniqpaths(self):
@@ -16,4 +16,8 @@ class TestTwoDimentionalDP(unittest.TestCase):
     def test_is_interleave(self):
         self.assertEqual(isInterleave("aabcc","dbbca", "aadbbbaccc"),False)
         self.assertEqual(isInterleave("","", ""),True)
+    def test_longest_increasing_path(self):
+        self.assertEqual(longestIncreasingPath([[9,9,4],[6,6,8],[2,1,1]]),4)
+        self.assertEqual(longestIncreasingPath([[3,4,5],[3,2,6],[2,2,1]]),4)
+
 unittest.main()
