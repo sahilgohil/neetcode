@@ -1,5 +1,5 @@
 from OneDimentionalDP import climbing_stairs
-from practice import minCostClimbingStairs, houseRobber, houseRobber2, longestPalindrome, decodeWays, coinChange, maxProduct
+from practice import minCostClimbingStairs, houseRobber, houseRobber2, longestPalindrome, decodeWays, coinChange, maxProduct, wordBreak
 import unittest
 
 class TestClimbingStairs(unittest.TestCase):
@@ -22,4 +22,6 @@ class TestClimbingStairs(unittest.TestCase):
         self.assertEqual(coinChange([1,2,5], 11),3)
     def test_max_product(self):
         self.assertEqual(maxProduct([2,3,-2,4]),6)
+    def test_word_break(self):
+        self.assertEqual(wordBreak("leetcode", ["leet","code"]), True)
 unittest.main()

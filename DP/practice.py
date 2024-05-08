@@ -225,36 +225,6 @@ def maxProduct(nums:List[int])->int:
     return max_so_far
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # max_product_so_far = nums[0]
-    # current_max = nums[0]
-    # current_min = nums[0]
-
-    # for i in range(1, len(nums)):
-    #     tempMax = max(nums[i], current_max * nums[i], current_min * nums[i])
-    #     current_min = min(nums[i], current_max * nums[i], current_min * nums[i])
-    #     current_max = tempMax
-
-    #     max_product_so_far = max(max_product_so_far, current_max)
-    # return max_product_so_far
 # print(maxProduct([2,3,-2,4]))
 # print(maxProduct([-2,0,-1]))
 
@@ -269,17 +239,18 @@ return the last value
 '''
 # wordbreak
 def wordBreak(s: str, wordDict: List[str]) -> bool:
-    n = len(s)
+    n = len(s) + 1
+    dp = [False] * n
+    dp[0] = True
     wordSet = set(wordDict)
-    dp = [False] * (n+1)
-    dp[0] = True # empty string can be segmented
-
-    for i in range(1, len(dp)):
+    for i in range(1, n):
         for j in range(i):
             if dp[j] and s[j:i] in wordSet:
                 dp[i] = True
-    return dp[-1]
+    return dp[-1]   
+ 
 # print(wordBreak("catsandog", ["cats","dog","sand","and","cat"]))
+# print(wordBreak("leetcode", ["leet","code"]))
 
 '''
 we check if the current num is less than the 
