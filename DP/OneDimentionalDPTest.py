@@ -1,5 +1,5 @@
 from OneDimentionalDP import climbing_stairs
-from practice import minCostClimbingStairs, houseRobber, houseRobber2, longestPalindrome, decodeWays, coinChange, maxProduct, wordBreak, lengthOfLIS, partition
+from ODDpractice import minCostClimbingStairs, houseRobber, houseRobber2, longestPalindrome, decodeWays, coinChange, maxProduct, wordBreak, lengthOfLIS, partition
 import unittest
 
 class TestClimbingStairs(unittest.TestCase):
