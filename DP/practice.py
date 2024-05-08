@@ -23,12 +23,9 @@ Return the minimum cost to reach the top of the floor.
 '''
 def minCostClimbingStairs( cost: List[int]) -> int:
     n = len(cost)
-    dp = [[0] * n]
-    if n == 0:
-        return 0
+    dp = [0] * n
+
     dp[0] = cost[0]
-    if n == 1:
-        return dp[0]
     dp[1] = cost[1]
 
 
@@ -37,16 +34,7 @@ def minCostClimbingStairs( cost: List[int]) -> int:
     
     return min(dp[-1], dp[-2])
 
-    # n = len(cost)
-    # dp = [0] * n
-    # # base case
-    # dp[0] = cost[0]
-    # dp[1] = cost[1]
 
-    # for i in range(2, n):
-    #     dp[i] = cost[i] + min(dp[i-1], dp[i-2])
-    # return min(dp[-1],dp[-2])
-print(minCostClimbingStairs([10,15,20])) # and is 15
 # house robber
 '''
 You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
@@ -291,7 +279,7 @@ def partition(nums:List[int])->bool:
             else:
                 dp[i][j] = dp[i-1][j]
     return dp[-1][-1]
-print(partition([1,5,11,5]))
-print(partition([1,2,3,5]))
+# print(partition([1,5,11,5]))
+# print(partition([1,2,3,5]))
 
 
