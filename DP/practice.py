@@ -163,21 +163,55 @@ then for each char we have to find out if the char is non zero and the two digit
 '''
 
 def decodeWays(s:str)->int:
-    n = len(s)
-    dp = [0] * (n+1) # as we have additional case for string beign empty
+    n = len(s)+1
+    dp = [0] * (n)
     dp[0] = 1
     dp[1] = 1 if s[0] != '0' else 0
 
-    for i in range(2, len(dp)):
-        singleDigit = int(s[i-1:i])
-        doubleDigit = int(s[i-2:i])
+    for i in range(2, n):
+        single = int(s[i-1:i])
+        double = int(s[i-2:i])
 
-        if 0< singleDigit <=9:
-            dp[i] += dp[i-1] # the ways to decode are same as previous
-        if 10 <= doubleDigit <= 26:
-            dp[i] += dp[i-2] # the ways to decode are same as one before previous
-
+        if 0<single<=9:
+            dp[i] += dp[i-1]
+        if 10<=double<=26:
+            dp[i] += dp[i-2]
     return dp[-1]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # n = len(s)
+    # dp = [0] * (n+1) # as we have additional case for string beign empty
+    # dp[0] = 1
+    # dp[1] = 1 if s[0] != '0' else 0
+
+    # for i in range(2, len(dp)):
+    #     singleDigit = int(s[i-1:i])
+    #     doubleDigit = int(s[i-2:i])
+
+    #     if 0< singleDigit <=9:
+    #         dp[i] += dp[i-1] # the ways to decode are same as previous
+    #     if 10 <= doubleDigit <= 26:
+    #         dp[i] += dp[i-2] # the ways to decode are same as one before previous
+
+    # return dp[-1]
 # print(decodeWays("223"))
 
 # coin change
