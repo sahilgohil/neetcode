@@ -9,7 +9,7 @@ if v2num > v1 number return -1
 if the length of the strings are not equal then consider the remaining numbers as 0 for comparision
 at the end if we cannot find any answer then return 0
 '''
-from typing import List
+from typing import List, Optional
 
 
 def compareVersion( version1: str, version2: str) -> int:
@@ -85,7 +85,7 @@ last we we have carry then we add it as a node
 return the reversed list again as the answer
 '''
 class Solution:
-    def doubleIt(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def doubleIt(self, head: Optional[ListNode]) -> Optional[ListNode]: # type: ignore
         if not head:
             return None
         head = self.reverseList(head)
@@ -98,7 +98,7 @@ class Solution:
             curr.val = curr.val%10
 
             if carry and curr.next is None:
-                curr.next = ListNode(carry)
+                curr.next = ListNode(carry) # type: ignore
                 break
             curr = curr.next
         return self.reverseList(head)
