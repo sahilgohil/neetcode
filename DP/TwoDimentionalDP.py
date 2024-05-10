@@ -182,3 +182,23 @@ def longestIncreasingPath(matrix: List[List[int]]) -> int:
         for j in range(COLS):
             dfs(i,j,-1)
     return max(dp.values())
+
+'''
+Distinct subsequences
+'''
+def numDistinct(s: str, t: str) -> int:
+    cache = {} # (i, j) -> numOfDistinctsubsequences
+    def dfs(i,j): # i is the idx of s and j is the idx of t
+        if j == len(t): # if we have empty string t then there is only one subsequence from s which is empty string
+            return 1
+        if i == len(s): # if we have empty input we cant make any sub sequence
+            return 0
+        if (i,j) in cache:
+            return cache[(i,j)]
+        
+        if s[i] == t[j]:
+            cache[(i,j)] = dfs(i+1,j+1) + dfs(i+1,j)
+        else:
+            cache[(i,j)] = dfs(i+1,j)
+        return cache[(i,j)]
+    return dfs(0,0)
