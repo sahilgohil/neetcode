@@ -202,3 +202,24 @@ def numDistinct(s: str, t: str) -> int:
             cache[(i,j)] = dfs(i+1,j)
         return cache[(i,j)]
     return dfs(0,0)
+
+'''
+Edit Distance
+'''
+def minDistance(word1: str, word2: str) -> int:
+    cache = {} # (i,j) -> minOperations
+    def dfs(i,j):
+        if i == len(word1) and j == len(word2):
+            return 0
+        if i == len(word1):
+            return len(word2)- j # when the i reaches the end returnt the remaining entry for the word 2
+        if j == len(word2):
+            return len(word1)- i # when the j reaches the end return the remaining entry for the word 1
+        if (i,j) in cache:
+            return cache[(i,j)]
+        if word1[i] == word2[j]:
+            cache[(i,j)] = dfs(i+1,j+1)
+        else:
+            cache[(i,j)] = 1 + min(dfs(i,j+1), dfs(i+1,j), dfs(i+1,j+1))# insert a char, remove a char, replace a char
+        return cache[(i,j)]
+    return dfs(0,0)
