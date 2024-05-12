@@ -1,6 +1,6 @@
 import unittest
-from TDDPractice import uniquePaths,longestCommonSubsequence,maxProfit,change
-from TwoDimentionalDP import findTargetSumWays, isInterleave, longestIncreasingPath, numDistinct, minDistance
+from TDDPractice import uniquePaths,longestCommonSubsequence,maxProfit,change,minDistance
+from TwoDimentionalDP import findTargetSumWays, isInterleave, longestIncreasingPath, numDistinct
 
 class TestTwoDimentionalDP(unittest.TestCase):
     def test_uniqpaths(self):
