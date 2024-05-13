@@ -102,3 +102,31 @@ def minDistance(word1: str, word2: str) -> int:
             cache[(i,j)] = 1 + min(dfs(i,j+1),dfs(i+1,j),dfs(i+1,j+1))
         return cache[(i,j)]
     return dfs(0,0)
+
+
+'''
+    115. Distinct Subsequences
+
+Given two strings s and t, return the number of distinct subsequences of s which equals t.
+
+The test cases are generated so that the answer fits on a 32-bit signed integer.
+'''
+
+def numDistinctPractice(s: str, t: str) -> int:
+    cache = {} #(i,j) -> numOfDistinct
+    def dfs(i,j):
+        if j == len(t):
+            return 1
+        if i == len(s):
+            return 0
+        if (i,j) in cache:
+            return cache[(i,j)]
+        if s[i] == t[j]:
+            cache[(i,j)] = dfs(i+1,j+1) + dfs(i+1,j)
+        else:
+            cache[(i,j)] = dfs(i+1,j)
+        return cache[(i,j)]
+    return dfs(0,0)
+    # if the t is empty then there is only one way to make the empty subsequence by not putting any one on the characters
+    
+    # if the s is empty there are no way to make a sub sequence

@@ -1,5 +1,5 @@
 import unittest
-from TDDPractice import uniquePaths,longestCommonSubsequence,maxProfit,change,minDistance
+from TDDPractice import uniquePaths,longestCommonSubsequence,maxProfit,change,minDistance,numDistinctPractice
 from TwoDimentionalDP import findTargetSumWays, isInterleave, longestIncreasingPath, numDistinct
 
 class TestTwoDimentionalDP(unittest.TestCase):
@@ -22,6 +22,8 @@ class TestTwoDimentionalDP(unittest.TestCase):
     def test_num_distinct_subsequences(self):
         self.assertEqual(numDistinct("rabbbit","rabbit"),3)
         self.assertEqual(numDistinct("babgbag","bag"),5)
+        self.assertEqual(numDistinctPractice("rabbbit","rabbit"),3)
+        self.assertEqual(numDistinctPractice("babgbag","bag"),5)
     def test_min_distance(self):
         self.assertEqual(minDistance("horse", "ros"), 3)
         self.assertEqual(minDistance("intention", "execution"), 5)
