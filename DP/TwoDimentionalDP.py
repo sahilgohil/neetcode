@@ -94,17 +94,29 @@ return the dp[amount]
 '''
 
 def change(amount: int, coins: List[int]) -> int:
-    n = amount + 1
-    dp = [0] * n # dp is the number of combination for the amount
-    dp[0] = 1 
+    cache = {} # (index, total) -> number of combination of the amount
+    def dfs(idx, total):
+        if total > amount:
+            return 0
+        if idx == len(coins):
+            return 1 if total == amount else 0
+        if (idx, total) in cache:
+            return cache[(idx,total)]
+        # either the current coin comes in the combination or it doesnt
+        cache[(idx,total)] = dfs(idx+1,total+coins[idx]) + dfs(idx,total+coins[idx]) + dfs(idx+1, total)
+        return cache[(idx,total)]
+    return dfs(0,0)
+    # n = amount + 1
+    # dp = [0] * n # dp is the number of combination for the amount
+    # dp[0] = 1 
 
-    # to find all the combination for the amount we have to loop through each coin
-    for coin in coins:
-        # then we have to check each amount from that coin to our target amount
-        for a in range(coin, n):
-            # add the values of the previous combinations for the coin of this amount
-            dp[a] += dp[a - coin]
-    return dp[amount]
+    # # to find all the combination for the amount we have to loop through each coin
+    # for coin in coins:
+    #     # then we have to check each amount from that coin to our target amount
+    #     for a in range(coin, n):
+    #         # add the values of the previous combinations for the coin of this amount
+    #         dp[a] += dp[a - coin]
+    # return dp[amount]
 
 print(change(5, [1,2,5]))
 
