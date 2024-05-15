@@ -157,7 +157,7 @@ Note: a + b is the concatenation of strings a and b.
 def isInterleave(s1: str, s2: str, s3: str) -> bool:
     if len(s1) + len(s2) != len(s3):
         return False
-    cache = {} # (idx1,idx2,strsofar)
+    cache = {} # (idx1,idx2)
     def backtracking(idx1,idx2):
         # if we reach the end of both the strings then we have the solution
         if idx1 == len(s1) and idx2 == len(s2):
