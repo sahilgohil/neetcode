@@ -81,7 +81,20 @@ def change(amount: int, coins: List[int]) -> int:
             dp[a] +=dp[a - c]
     return dp[amount]
 
+'''
+Find target sum to make up the target
+'''
+def findTargetSumWaysPractice(nums: List[int], target: int) -> int:
+    cache = {} #(index, totalSoFar) -> number of ways
 
+    def dfs(i, total):
+        if i == len(nums):
+            return 1 if total == target else 0
+        if (i,total) in cache:
+            return cache[(i,total)]
+        cache[(i,total)] = (dfs(i+1,total+nums[i]) + dfs(i+1,total-nums[i]))
+        return cache[(i,total)]
+    return dfs(0,0)
 '''
 Edit distance
 '''
@@ -105,7 +118,7 @@ def minDistance(word1: str, word2: str) -> int:
 
 
 '''
-    115. Distinct Subsequences
+115. Distinct Subsequences
 
 Given two strings s and t, return the number of distinct subsequences of s which equals t.
 
@@ -115,10 +128,15 @@ The test cases are generated so that the answer fits on a 32-bit signed integer.
 def numDistinctPractice(s: str, t: str) -> int:
     cache = {} #(i,j) -> numOfDistinct
     def dfs(i,j):
+
+        # if the t is empty then there is only one way to make the empty subsequence by not putting any one on the characters
         if j == len(t):
             return 1
+
+        # if the s is empty there are no way to make a sub sequence
         if i == len(s):
             return 0
+
         if (i,j) in cache:
             return cache[(i,j)]
         if s[i] == t[j]:
@@ -127,6 +145,4 @@ def numDistinctPractice(s: str, t: str) -> int:
             cache[(i,j)] = dfs(i+1,j)
         return cache[(i,j)]
     return dfs(0,0)
-    # if the t is empty then there is only one way to make the empty subsequence by not putting any one on the characters
     
-    # if the s is empty there are no way to make a sub sequence

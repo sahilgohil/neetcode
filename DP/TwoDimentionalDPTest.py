@@ -1,5 +1,5 @@
 import unittest
-from TDDPractice import uniquePaths,longestCommonSubsequence,maxProfit,change,minDistance,numDistinctPractice
+from TDDPractice import uniquePaths,longestCommonSubsequence,maxProfit,change,minDistance,numDistinctPractice,findTargetSumWaysPractice
 from TwoDimentionalDP import findTargetSumWays, isInterleave, longestIncreasingPath, numDistinct
 
 class TestTwoDimentionalDP(unittest.TestCase):
@@ -13,6 +13,7 @@ class TestTwoDimentionalDP(unittest.TestCase):
         self.assertEqual(change(5 , [1,2,5]),4)
     def test_targetSumWays(self):
         self.assertEqual(findTargetSumWays([1,1,1,1,1],3),5)
+        self.assertEqual(findTargetSumWaysPractice([1,1,1,1,1],3),5)
     def test_is_interleave(self):
         self.assertEqual(isInterleave("aabcc","dbbca", "aadbbbaccc"),False)
         self.assertEqual(isInterleave("","", ""),True)
