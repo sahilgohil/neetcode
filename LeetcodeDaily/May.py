@@ -137,5 +137,26 @@ class Solution:
         return result
         
                 
-        
+        # May 16 2024
+        '''
+        Find safest path in a grid
+        '''
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:2453375176.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:849294603.
+
+def maximumSafenessFactor(self, grid: List[List[int]]) -> int:
+        cache = {} #(r, c) -> min distance
+        def dfs(r,c):
+            if r<0 or c<0 or r>=len(grid) or c>=len(grid[0]) or grid[r][c] ==1:
+                return 0
+            if (r,c) in cache:
+                return cache[(r,c)]
+            if r == len(grid)-1 and c == len(grid[0])-1:
+                return 0
+            min_dis = float('inf')
+            min_dis = min(min_dis, 1 + dfs(r+1,c), 1 + dfs(r-1,c), 1 + dfs(r,c+1), 1 + dfs(r,c-1))
+            cache[(r,c)] = min_dis
+            return cache[(r,c)]
+        return dfs(0,0)
+
 

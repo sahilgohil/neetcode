@@ -249,9 +249,32 @@ def maxCoins(nums: List[int]) -> int:
             return 0
         if (l,r) in cache:
             return cache[(l,r)]
-        cache[(i,j)] = 0
+        cache[(l,r)] = 0
         for i in range(l,r+1):
-            cache[(i,j)] = nums[l-1] * nums[i] * nums[r+1]
-            cache[(i,j)] = dfs(l,i-1) + dfs(i+1,r)
-        return cache[(i,j)]
+            coins = nums[l-1] * nums[i] * nums[r+1]
+            coins += dfs(l,i-1) + dfs(i+1,r)
+            cache[(l,r)] = max(cache[(l,r)], coins)
+        return cache[(l,r)]
     return dfs(1,len(nums)-2)
+
+
+'''
+Pattern matching expression
+'''
+def isMatch(s: str, p: str) -> bool:
+    cache = {} # (i,j) -> bool
+    def dfs(i,j):
+        if i >= len(s) and j >= len(p):
+            return True
+        if j >= len(s):
+            return False
+        if (i,j) in cache:
+            return cache[(i,j)]
+        match = i < len(s) and (s[i] == p[j] or p[j] == ".")
+
+        # if the next char is *
+        if j+1 < len(p) and p[j+1] == "*":
+            
+        
+        return False
+    return dfs(0,0)
