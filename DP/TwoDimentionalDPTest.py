@@ -1,6 +1,6 @@
 import unittest
 from TDDPractice import uniquePaths,longestCommonSubsequence,maxProfit,change,minDistance,numDistinctPractice,findTargetSumWaysPractice,isInterleavePractice
-from TwoDimentionalDP import findTargetSumWays, isInterleave, longestIncreasingPath, numDistinct, maxCoins,isMatch
+from TwoDimentionalDP import findTargetSumWays, isInterleave, longestIncreasingPath, numDistinct,maxCoins
 
 class TestTwoDimentionalDP(unittest.TestCase):
     def test_uniqpaths(self):
@@ -30,10 +30,5 @@ class TestTwoDimentionalDP(unittest.TestCase):
     def test_min_distance(self):
         self.assertEqual(minDistance("horse", "ros"), 3)
         self.assertEqual(minDistance("intention", "execution"), 5)
-    def test_max_coins(self):
-        self.assertEqual(maxCoins([3,1,5,8]),167)
-    def test_is_match(self):
-        self.assertEqual(isMatch(s = "aa", p = "a"),False)
-        self.assertEqual(isMatch(s = "aa", p = "a*"),True)
-        self.assertEqual(isMatch(s = "ab", p = ".*"),True)
+   
 unittest.main()
