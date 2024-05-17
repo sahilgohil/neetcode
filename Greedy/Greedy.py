@@ -1,3 +1,4 @@
+import heapq
 from typing import List
 
 '''
@@ -87,3 +88,38 @@ def canCompleteCircuit(gas: List[int], cost: List[int]) -> int:
 
     return start
 print(canCompleteCircuit([1,2,3,4,5], [3,4,5,1,2]))
+
+
+'''
+Hand of Straights
+
+Alice has some number of cards and she wants to rearrange the cards into groups so that each group is of size groupSize, and consists of groupSize consecutive cards.
+
+Given an integer array hand where hand[i] is the value written on the ith card and an integer groupSize, return true if she can rearrange the cards, or false otherwise.
+'''
+
+def isNStraightHand(hand: List[int], groupSize: int) -> bool:
+    #if the hand length is not divisible by groupsize then we cant have
+    if len(hand) % groupSize != 0:
+        return False
+    
+    table = {} # each number -> count
+    for n in hand:
+        table[n] = 1 + table.get(n,0)
+    # we need to heapify to get the min 
+    minHeap = list(table.keys()) # will give the distinct set of numbers 
+    heapq.heapify(minHeap)
+
+    while minHeap:
+        start = minHeap[0] # will give the minimum value
+        for i in range(start, start + groupSize):
+            if i not in table:
+                return False
+            table[i] -= 1
+
+            if table[i] == 0:
+                # if the value poping is the min
+                if i != minHeap[0]:
+                    return False
+                heapq.heappop(minHeap)
+    return True
