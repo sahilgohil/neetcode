@@ -1,6 +1,6 @@
 import unittest
 
-from Greedy import maxSubArray, canJump,isNStraightHand,mergeTriplets
+from Greedy import maxSubArray, canJump,isNStraightHand,mergeTriplets, partitionLabels
 
 class TestGreedy(unittest.TestCase):
 
@@ -15,5 +15,10 @@ class TestGreedy(unittest.TestCase):
     def test_merge_triplets(self):
         self.assertEqual(mergeTriplets([[2,5,3],[1,8,4],[1,7,5]],[2,7,5]), True)
         self.assertEqual(mergeTriplets([[3,4,5],[4,5,6]], [3,2,5]), False)
+    def test_partition_labels(self):
+        self.assertEqual(partitionLabels("ababcbacadefegdehijhklij"), [9,7,8])
+        self.assertEqual(partitionLabels("eccbbbbdec"), [10])
+
+
 
 unittest.main()
