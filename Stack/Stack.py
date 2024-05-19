@@ -69,4 +69,20 @@ def generateParenthesis(n: int) -> List[str]:
     backtrack(0,0)
     return res
 
-print(generateParenthesis(3))
+# print(generateParenthesis(3))
+
+'''
+Daily Temperature
+
+Given an array of integers temperatures represents the daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature. If there is no future day for which this is possible, keep answer[i] == 0 instead.
+'''
+def dailyTemperatures(temperatures: List[int]) -> List[int]:
+    stack = [] #(index, value)
+    res = [0] * len(temperatures)
+    for i,t in enumerate(temperatures):
+        while stack and t > stack[len(stack)-1][1]:
+            top = stack.pop()
+            res[top[0]] = i - top[0]
+        stack.append((i,t))
+    return res
+print(dailyTemperatures([73,74,75,71,69,72,76,73]))
