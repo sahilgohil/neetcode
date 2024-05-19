@@ -37,5 +37,36 @@ def subtract(a,b):
     return a-b
 def multiply(a,b):
     return a*b
-print(evalRPN(["10","6","9","3","+","-11","*","/","*","17","+","5","+"]))
+# print(evalRPN(["10","6","9","3","+","-11","*","/","*","17","+","5","+"]))
 # print(int(132//136))
+
+'''
+Generate Parenthesis
+
+
+'''
+def generateParenthesis(n: int) -> List[str]:
+    stack = []
+    res = []
+
+    # add to the res if openN and closeN are n
+    def backtrack(openN, closeN):
+        if openN == closeN == n:
+            res.append("".join(stack))
+        
+        # only add open if open is less than n
+        if openN < n:
+            stack.append("(")
+            backtrack(openN+1,closeN)
+            stack.pop()
+        
+        # only add closed if the closeN is less than openN
+        if closeN < openN:
+            stack.append(")")
+            backtrack(openN,closeN+1)
+            stack.pop()
+
+    backtrack(0,0)
+    return res
+
+print(generateParenthesis(3))
