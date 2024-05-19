@@ -27,3 +27,32 @@ def hammingWeight(n: int) -> int:
         res += n % 2
         n = n >> 1
     return res
+
+'''
+Missing number
+
+Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+'''
+def missingNumber(nums: List[int]) -> int:
+    mySet = set()
+    for i in nums:
+        mySet.add(i)
+    for i in range(len(nums)+1):
+        if i not in mySet:
+            return i
+
+
+    return 0
+
+
+'''
+Sum of two integers
+
+Given two integers a and b, return the sum of the two integers without using the operators + and -.
+'''
+def getSum(a: int, b: int) -> int:
+    while(b !=0):
+        temp = (a & b) << 1
+        a = a ^ b
+        b = temp
+    return a
