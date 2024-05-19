@@ -175,3 +175,32 @@ def partitionLabels(s: str) -> List[int]:
             res.append(start)
             start = 0
     return res
+
+'''
+Valid parenthesis
+
+
+'''
+
+def checkValidString(s: str) -> bool:
+    cache = {} # (i,left) -> valid string sofar
+    def dfs(i, left):
+        if left <0:
+            return False
+        if i == len(s):
+            return left == 0
+        if (i,left) in cache:
+            return cache[(i,left)]
+        cc = s[i]
+        if cc == '(':
+            choice = dfs(i+1,left+1)
+        elif cc == ')':
+            if left == 0:
+                return False
+            choice = dfs(i+1,left-1)
+        else:
+            choice = dfs(i+1,left+1) or dfs(i+1,left) or dfs(i+1,left-1)
+        cache[(i,left)] = choice
+        return choice
+    return dfs(0,0)
+print(checkValidString("((*)*)*)((*"))
