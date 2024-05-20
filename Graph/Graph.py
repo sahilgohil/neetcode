@@ -150,3 +150,36 @@ Every minute, any fresh orange that is 4-directionally adjacent to a rotten oran
 
 Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1.
 '''
+
+def orangesRotting(grid: List[List[int]]) -> int:
+    # we put the rotten oranges in
+    # then do bfs to make the surrounding ornages rotten
+    # if at the end any of the oranges left then return -1
+    rows,cols = len(grid), len(grid[0])
+    freahOranges = 0
+    q = collections.deque()
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 1:
+                freahOranges += 1
+            elif grid[r][c] == 2:
+                q.append([r,c])
+    # bfs unitl no more fresh left or until q is not empty
+    dir = [[1,0],[-1,0],[0,1],[0,-1]]
+    time = 0
+    while q and freahOranges >0:
+        for i in range(len(q)):
+            pr,pc = q.popleft()
+            for d in dir:
+                r = d[0]+pr
+                c = d[1]+pc
+                if r < 0 or r == rows or c < 0  or c == cols or grid[r][c] != 1:
+                    continue
+                else:
+                    grid[r][c] = 2
+                    q.append([r,c])
+                    freahOranges -= 1 
+        time+=1
+
+    return time if freahOranges == 0 else -1
+print(orangesRotting([[1,2]]))
