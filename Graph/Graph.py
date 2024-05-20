@@ -84,15 +84,69 @@ class Node {
 }
 '''
 
-def cloneGraph(node: Optional['Node']) -> Optional['Node']:
-    oldToNew = {} #oldNode -> newNode
+# def cloneGraph(node: Optional['Node']) -> Optional['Node']:
+#     oldToNew = {} #oldNode -> newNode
 
-    def dfs(node):
-        if node in oldToNew:
-            return oldToNew[node]
-        copy = Node(node.val)
-        oldToNew[node] = copy
-        for nei in node.neighbors:
-            copy.neighbors.append(dfs(nei))
-        return copy
-    return dfs(node)
+#     def dfs(node):
+#         if node in oldToNew:
+#             return oldToNew[node]
+#         copy = Node(node.val)
+#         oldToNew[node] = copy
+#         for nei in node.neighbors:
+#             copy.neighbors.append(dfs(nei))
+#         return copy
+#     return dfs(node)
+
+'''
+Walls and Gates (leetcode premium)
+
+You are given a m x n 2D grid initialized with these three possible values.
+
+-1 - A wall or an obstacle.
+0 - A gate.
+INF - Infinity means an empty room. We use the value 2^31 - 1 = 2147483647 to represent INF as you may assume that the distance to a gate is less than 2147483647.
+Fill each empty room with the distance to its nearest gate. If it is impossible to reach a Gate, that room should remain filled with INF
+'''
+def walls_and_gates(grid: List[List[int]]) -> List[List[int]]:
+    
+    rows,cols = len(grid), len(grid[0])
+    q = collections.deque()
+    # append all the cells which are gates
+    visit = set()
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 0:
+                visit.add((r,c))
+                q.append([r,c])
+    # initialize the distance
+    def addCell(r,c):
+        if r not in range(rows) or c not in range(cols) or grid[r][c] == -1 or (r,c) in visit:
+            return
+        visit.add((r,c))
+        q.append([r,c])
+
+    dist = 0
+    # run the bfs
+    while q:
+
+        for i in range(len(q)):
+            r,c = q.popleft()
+            grid[r][c] = dist
+            addCell(r+1,c)
+            addCell(r-1,c)
+            addCell(r,c+1)
+            addCell(r,c-1)
+        dist+=1
+
+'''
+Rotting Oranges
+
+You are given an m x n grid where each cell can have one of three values:
+
+0 representing an empty cell,
+1 representing a fresh orange, or
+2 representing a rotten orange.
+Every minute, any fresh orange that is 4-directionally adjacent to a rotten orange becomes rotten.
+
+Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1.
+'''
