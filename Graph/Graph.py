@@ -303,3 +303,46 @@ def canFinish(numCourses: int, prerequisites: List[List[int]]) -> bool:
             return False
         
     return True
+
+
+'''
+Course Schedule 2
+
+There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+
+For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+Return the ordering of courses you should take to finish all courses. If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
+'''
+
+def findOrder(numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+    res = []
+    # create a map for each course as key and its prerequisits as values
+    preMap = {i:[] for i in range(numCourses)}
+    # loop through the prerequisits and put values
+    for cors,pre in prerequisites:
+        preMap[cors].append(pre)
+    
+    # create a dfs function that loops and checks for any loops
+    visit = set() # set of all the visited courses
+    cycle = set()
+
+    def dfs(cors):
+        if cors in cycle:
+            return False
+        if cors in visit:
+            return True
+        
+        cycle.add(cors)
+        for pre in preMap[cors]:
+            if not dfs(pre): # if any of the pre requsits are visited already then return false
+                return False
+        cycle.remove(cors)
+        visit.add(cors)
+        res.append(cors)
+        return True
+    
+    for cors in range(numCourses):
+        if not dfs(cors):
+            return []
+    return res
+print(findOrder(4, [[1,0],[2,0],[3,1],[3,2]]))
