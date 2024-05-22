@@ -345,4 +345,39 @@ def findOrder(numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         if not dfs(cors):
             return []
     return res
-print(findOrder(4, [[1,0],[2,0],[3,1],[3,2]]))
+# print(findOrder(4, [[1,0],[2,0],[3,1],[3,2]]))
+
+'''
+Graph valid tree
+'''
+def validTree(n: int, edges: List[List[int]]) -> bool:
+    if not n:
+        return True
+    adjList = {i:[] for i in range(n)}
+    for n1, n2 in edges:
+        adjList[n1].append(n2)
+        adjList[n2].append(n1)
+    visit = set()
+    def dfs(curr, prev):
+        if curr in visit:
+            return False
+        visit.add(curr)
+        for nei in adjList[curr]:
+            if nei == prev:
+                continue
+            if not dfs(nei,curr):
+                return False
+        return True
+    
+    return dfs(0,-1) and n == len(visit)
+
+'''
+Number of Connected components
+
+There is an undirected graph with n nodes. There is also an edges array, where edges[i] = [a, b] means that there is an edge between node a and node b in the graph.
+
+Return the total number of connected components in that graph.
+'''
+def countComponents(n: int, edges: List[List[int]]) -> int:
+    
+    return 0
