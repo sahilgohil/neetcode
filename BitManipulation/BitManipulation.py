@@ -29,6 +29,43 @@ def hammingWeight(n: int) -> int:
     return res
 
 '''
+Counting Bits
+
+Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
+'''
+def countBits(n: int) -> List[int]:
+    dp = [0] * (n+1)
+    offset = 1
+    for i in range(1, len(dp)):
+        if offset * 2 == i:
+            offset = i
+        dp[i] = dp[i-offset]
+        
+    return dp
+
+
+'''
+Reverse Bits
+
+Reverse bits of a given 32 bits unsigned integer.
+
+Note:
+
+Note that in some languages, such as Java, there is no unsigned integer type. In this case, both input and output will be given as a signed integer type. They should not affect your implementation, as the integer's internal binary representation is the same, whether it is signed or unsigned.
+In Java, the compiler represents the signed integers using 2's complement notation. Therefore, in Example 2 above, the input represents the signed integer -3 and the output represents the signed integer -1073741825.
+ 
+'''
+
+def reverseBits(n: int) -> int:
+    res = 0
+
+    for i in range(32):
+        bit = (n >> i) & 1
+        res = res | (bit << (31-i))
+
+    return res
+
+'''
 Missing number
 
 Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.

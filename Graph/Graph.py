@@ -107,7 +107,7 @@ You are given a m x n 2D grid initialized with these three possible values.
 INF - Infinity means an empty room. We use the value 2^31 - 1 = 2147483647 to represent INF as you may assume that the distance to a gate is less than 2147483647.
 Fill each empty room with the distance to its nearest gate. If it is impossible to reach a Gate, that room should remain filled with INF
 '''
-def walls_and_gates(grid: List[List[int]]) -> List[List[int]]:
+def walls_and_gates(grid: List[List[int]]) -> List[List[int]]: # type: ignore
     
     rows,cols = len(grid), len(grid[0])
     q = collections.deque()
@@ -182,9 +182,259 @@ def orangesRotting(grid: List[List[int]]) -> int:
         time+=1
 
     return time if freahOranges == 0 else -1
-print(orangesRotting([[1,2]]))
+# print(orangesRotting([[1,2]]))
 
+'''
+
+Pacific Atlantic waterflow
+
+There is an m x n rectangular island that borders both the Pacific Ocean and Atlantic Ocean. The Pacific Ocean touches the island's left and top edges, and the Atlantic Ocean touches the island's right and bottom edges.
+
+The island is partitioned into a grid of square cells. You are given an m x n integer matrix heights where heights[r][c] represents the height above sea level of the cell at coordinate (r, c).
+
+The island receives a lot of rain, and the rain water can flow to neighboring cells directly north, south, east, and west if the neighboring cell's height is less than or equal to the current cell's height. Water can flow from any cell adjacent to an ocean into the ocean.
+
+Return a 2D list of grid coordinates result where result[i] = [ri, ci] denotes that rain water can flow from cell (ri, ci) to both the Pacific and Atlantic oceans.
+'''
+def pacificAtlantic(heights: List[List[int]]) -> List[List[int]]:
+    res = []
+
+    rows,cols = len(heights), len(heights[0])
+
+    pac, atl = set(), set()
+
+    def dfs(r,c,visit,preHeight):
+        if r not in range(rows) or c not in range(cols) or (r,c) in visit or heights[r][c] < preHeight:
+            return
+        visit.add((r,c))
+        dfs(r+1,c,visit,heights[r][c])
+        dfs(r-1,c,visit,heights[r][c])
+        dfs(r,c+1,visit,heights[r][c])
+        dfs(r,c-1,visit,heights[r][c])
+
+    for c in range(cols):
+        dfs(0,c,pac,heights[0][c])
+        dfs(rows-1,c,atl,heights[rows-1][c])
+
+    for r in range(rows):
+        dfs(r, 0, pac, heights[r][0])
+        dfs(r, cols-1,atl,heights[r][cols-1])
+
+    for r in range(rows):
+        for c in range(cols):
+            if (r,c) in pac and (r,c) in atl:
+                res.append([r,c])
+
+    return res
 
 '''
 
+Surrounded Regions
+
+Given an m x n matrix board containing 'X' and 'O', capture all regions that are 4-directionally surrounded by 'X'.
+
+A region is captured by flipping all 'O's into 'X's in that surrounded region.
 '''
+
+def solve(board: List[List[str]]) -> None:
+
+    rows,cols = len(board), len(board[0])
+
+    def dfs(r,c):
+        if r not in range(rows) or c not in range(cols) or board[r][c] != "O":
+            return
+        board[r][c] = "T"
+        dfs(r+1,c)
+        dfs(r-1,c)
+        dfs(r,c+1)
+        dfs(r,c-1)
+    for r in range(rows):
+        for c in range(cols):
+            if board[r][c] == "O" and (r in [0,rows-1] or c in [0,cols-1]):
+                dfs(r,c)
+    # first run the dfs on the borders and capture the o regions into T
+    for r in range(rows):
+        for c in range(cols):
+            if board[r][c] == "O":
+                board[r][c] = "X"
+    # make all the remaining o into x
+
+    for r in range(rows):
+        for c in range(cols):
+            if board[r][c] == "T":
+                board[r][c] = "O"
+
+
+'''
+Course Schedule
+
+There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+
+For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+Return true if you can finish all courses. Otherwise, return false.
+'''
+
+def canFinish(numCourses: int, prerequisites: List[List[int]]) -> bool:
+    # create a map for each course as key and its prerequisits as values
+    preMap = {i:[] for i in range(numCourses)}
+    # loop through the prerequisits and put values
+    for cors,pre in prerequisites:
+        preMap[cors].append(pre)
+    
+    # create a dfs function that loops and checks for any loops
+    visit = set() # set of all the visited courses
+
+    def dfs(cors):
+        if cors in visit:
+            return False
+        if preMap[cors] == []:
+            return True
+        
+        visit.add(cors)
+        for pre in preMap[cors]:
+            if not dfs(pre): # if any of the pre requsits are visited already then return false
+                return False
+        visit.remove(cors)
+        preMap[cors] = []
+        return True
+    
+    for cors in range(numCourses):
+        if not dfs(cors):
+            return False
+        
+    return True
+
+
+'''
+Course Schedule 2
+
+There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+
+For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+Return the ordering of courses you should take to finish all courses. If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
+'''
+
+def findOrder(numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+    res = []
+    # create a map for each course as key and its prerequisits as values
+    preMap = {i:[] for i in range(numCourses)}
+    # loop through the prerequisits and put values
+    for cors,pre in prerequisites:
+        preMap[cors].append(pre)
+    
+    # create a dfs function that loops and checks for any loops
+    visit = set() # set of all the visited courses
+    cycle = set()
+
+    def dfs(cors):
+        if cors in cycle:
+            return False
+        if cors in visit:
+            return True
+        
+        cycle.add(cors)
+        for pre in preMap[cors]:
+            if not dfs(pre): # if any of the pre requsits are visited already then return false
+                return False
+        cycle.remove(cors)
+        visit.add(cors)
+        res.append(cors)
+        return True
+    
+    for cors in range(numCourses):
+        if not dfs(cors):
+            return []
+    return res
+# print(findOrder(4, [[1,0],[2,0],[3,1],[3,2]]))
+
+'''
+Graph valid tree
+'''
+def validTree(n: int, edges: List[List[int]]) -> bool:
+    if not n:
+        return True
+    adjList = {i:[] for i in range(n)}
+    for n1, n2 in edges:
+        adjList[n1].append(n2)
+        adjList[n2].append(n1)
+    visit = set()
+    def dfs(curr, prev):
+        if curr in visit:
+            return False
+        visit.add(curr)
+        for nei in adjList[curr]:
+            if nei == prev:
+                continue
+            if not dfs(nei,curr):
+                return False
+        return True
+    
+    return dfs(0,-1) and n == len(visit)
+
+'''
+Number of Connected components
+
+There is an undirected graph with n nodes. There is also an edges array, where edges[i] = [a, b] means that there is an edge between node a and node b in the graph.
+
+Return the total number of connected components in that graph.
+'''
+def countComponents(n: int, edges: List[List[int]]) -> int:
+    visit = set()
+    adjList = {i:[] for i in range(n)}
+    for n1,n2 in edges:
+        adjList[n1].append(n2)
+        adjList[n2].append(n1)
+    
+    def dfs(node):
+        if node in visit:
+            return
+        visit.add(node)
+        for nei in adjList[node]:
+           if nei not in visit:
+               dfs(nei)
+    components = 0
+    for i in range(n):
+        if i not in visit:
+            components += 1
+            dfs(i)
+    return components
+
+'''
+
+Redundant Connection
+
+In this problem, a tree is an undirected graph that is connected and has no cycles.
+
+You are given a graph that started as a tree with n nodes labeled from 1 to n, with one additional edge added. The added edge has two different vertices chosen from 1 to n, and was not an edge that already existed. The graph is represented as an array edges of length n where edges[i] = [ai, bi] indicates that there is an edge between nodes ai and bi in the graph.
+
+Return an edge that can be removed so that the resulting graph is a tree of n nodes. If there are multiple answers, return the answer that occurs last in the input.
+'''
+def findRedundantConnection(edges: List[List[int]]) -> List[int]:
+    
+    # using the union find algorithm
+    # requires a rank and parent 
+    par = [i for i in range(len(edges) + 1)]
+    rank = [1] * (len(edges) +1)
+
+    def find(n):
+        p = par[n]
+        while p != par[p]:
+            par[p] = par[par[p]]
+            p = par[p]
+        return p
+    def union(n1,n2):
+        p1,p2 = find(n1), find(n2)
+        if p1 == p2:
+            return False
+        if rank[p1] > rank[p2]:
+            par[p2] = p1
+            rank[p1] += rank[p2]
+        else:
+            par[p1] = p2
+            rank[p2] += rank[p1]
+        return True
+    
+    for n1,n2 in edges:
+        if not union(n1,n2):
+            return [n1,n2]
+    return []
