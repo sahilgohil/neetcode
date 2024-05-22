@@ -183,3 +183,8 @@ def orangesRotting(grid: List[List[int]]) -> int:
 
     return time if freahOranges == 0 else -1
 print(orangesRotting([[1,2]]))
+
+
+'''
+
+'''
