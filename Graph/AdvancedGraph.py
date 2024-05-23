@@ -205,3 +205,40 @@ def foreignDictionary(words: List[str]) -> str:
     if len(res) == len(adjList):
         return "".join(res)
     return ""
+
+'''
+Cheapest Flights Within K Stops
+
+There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei] indicates that there is a flight from city fromi to city toi with cost pricei.
+
+You are also given three integers src, dst, and k, return the cheapest price from src to dst with at most k stops. If there is no such route, return -1.
+'''
+
+def findCheapestPrice(n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+    if dst >=n:
+        return -1
+    adjList = collections.defaultdict(list)
+    # make the adjlist
+    for s, d, c in flights:
+        adjList[s].append([d,c]) #(dest, cost)
+    
+    # require a min head
+    minH = [[0,src,k]] # cost and node
+    visit = set()
+
+    while minH:
+        cost, node, step = heapq.heappop(minH)
+
+        if node == dst:
+            res = min(res,cost)
+
+        if (node,step) in visit or step <0:
+            continue
+        visit.add(node,step)
+        for nei, c in adjList[node]:
+            if (nei,step-1) not in visit:
+                heapq.heappush(minH,[c+cost, nei,step-1])
+               
+    return -1
+
+# print(findCheapestPrice(5, [[0,1,5],[1,2,5],[0,3,2],[3,1,2],[1,4,1],[4,2,1]], 0,2,2))
