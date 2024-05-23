@@ -173,53 +173,35 @@ SUDO CODE:
    # create a visit map where true value = in current path, false value = not in current path
    # create a res list
 '''
-
-# still not working find out correct solution
 def foreignDictionary(words: List[str]) -> str:
-    # Create adjacency list for all unique characters
-    adjList = {c: set() for word in words for c in word}
-    in_degree = {c: 0 for c in adjList}
-    
-    # Build the graph
-    for i in range(len(words) - 1):
-        word1 = words[i]
-        word2 = words[i + 1]
-        minLen = min(len(word1), len(word2))
-        
-        # Check for invalid order, where a longer word comes before its prefix
-        if len(word1) > len(word2) and word1[:minLen] == word2[:minLen]:
+    adjList = {c:set() for w in words for c in w}
+    incoming_edges = {c:0 for c in adjList}
+
+    for i in range(len(words)-1):
+        w1 = words[i]
+        w2 = words[i+1]
+        minL = min(len(w1),len(w2))
+        if len(w1) > len(w2) and w1[:minL] == w2[:minL]:
             return ""
         
-        # Find the first differing character and create the graph edge
-        for j in range(minLen):
-            if word1[j] != word2[j]:
-                if word2[j] not in adjList[word1[j]]:
-                    adjList[word1[j]].add(word2[j])
-                    in_degree[word2[j]] += 1
+        for j in range(minL):
+            if w1[j] != w2[j]:
+                adjList[w1[j]].add(w2[j])
+                incoming_edges[w2[j]] += 1
                 break
-    
-    # Topological sort using Kahn's algorithm
-    q: Deque[str] = collections.deque()
-    for char in in_degree:
-        if in_degree[char] == 0:
-            q.append(char)
-    
+    q = collections.deque()
+    for k, v in incoming_edges.items():
+        if v == 0:
+            q.append(k)
     res = []
     while q:
-        char = q.popleft()
-        res.append(char)
-        for nei in adjList[char]:
-            in_degree[nei] -= 1
-            if in_degree[nei] == 0:
+        c = q.popleft()
+        res.append(c)
+        for nei in adjList[c]:
+            incoming_edges[nei] -= 1
+            if incoming_edges[nei] == 0:
                 q.append(nei)
     
-    # If we were able to add all characters, return the result
     if len(res) == len(adjList):
         return "".join(res)
-    else:
-        return ""
-
-
-    
-
-print(foreignDictionary(["wrt","wrf","er","ett","rftt","te"]))
+    return ""
