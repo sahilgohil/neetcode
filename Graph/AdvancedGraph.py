@@ -109,3 +109,40 @@ def networkDelayTime(times: List[List[int]], n: int, k: int) -> int:
         for nei, weight in adjList[node]:
             heapq.heappush([cost+weight,nei])
     return t
+
+'''
+Swim in rising water
+
+You are given an n x n integer matrix grid where each value grid[i][j] represents the elevation at that point (i, j).
+
+The rain starts to fall. At time t, the depth of the water everywhere is t. You can swim from a square to another 4-directionally adjacent square if and only if the elevation of both squares individually are at most t. You can swim infinite distances in zero time. Of course, you must stay within the boundaries of the grid during your swim.
+
+Return the least time until you can reach the bottom right square (n - 1, n - 1) if you start at the top left square (0, 0).
+'''
+def swimInWater(grid: List[List[int]]) -> int:
+    rows,cols = len(grid), len(grid[0])
+
+    t=0
+    visit = set()
+    minH = [[grid[0][0],0,0]] # [cost,row,col]
+
+    while minH:
+        cost, r, c = heapq.heappop(minH)
+        if (r,c) in visit or r not in range(rows) or c not in range(cols):
+            continue
+        visit.add((r,c))
+        t = max(t,cost)
+        if r == rows -1 and c == cols-1:
+            return t
+        if r+1 in range(rows) and (r+1,c) not in visit:
+            heapq.heappush(minH,[grid[r+1][c],r+1,c])
+        if r-1 in range(rows) and (r-1,c) not in visit:
+            heapq.heappush(minH,[grid[r-1][c],r-1,c])
+        if c+1 in range(cols) and (r,c+1) not in visit:
+            heapq.heappush(minH,[grid[r][c+1],r,c+1])
+        if c-1 in range(cols) and (r,c-1) not in visit:
+            heapq.heappush(minH,[grid[r][c-1],r,c-1])
+
+    return 0
+
+print(swimInWater([[0,1,2,3,4],[24,23,22,21,5],[12,13,14,15,16],[11,17,18,19,20],[10,9,8,7,6]]))
