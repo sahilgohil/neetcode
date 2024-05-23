@@ -176,40 +176,50 @@ SUDO CODE:
 
 # still not working find out correct solution
 def foreignDictionary(words: List[str]) -> str:
-    adjList = {c:[] for word in words for c in word}
-
+    # Create adjacency list for all unique characters
+    adjList = {c: set() for word in words for c in word}
+    in_degree = {c: 0 for c in adjList}
     
-    for i in range(len(words)-1):
+    # Build the graph
+    for i in range(len(words) - 1):
         word1 = words[i]
-        word2 = words[i+1]
-        minLen = min(len(word1),len(word2))
+        word2 = words[i + 1]
+        minLen = min(len(word1), len(word2))
+        
+        # Check for invalid order, where a longer word comes before its prefix
         if len(word1) > len(word2) and word1[:minLen] == word2[:minLen]:
             return ""
+        
+        # Find the first differing character and create the graph edge
         for j in range(minLen):
-            if word1[j] != word2[j] and word2[j] not in adjList[word1[j]]:
-                adjList[word1[j]].append(word2[j])
-                
-    visit = set()
-    mainRes = []
-    def bfs(char):
-        q = collections.deque()
-        q.append(char)
-        res = []
+            if word1[j] != word2[j]:
+                if word2[j] not in adjList[word1[j]]:
+                    adjList[word1[j]].add(word2[j])
+                    in_degree[word2[j]] += 1
+                break
+    
+    # Topological sort using Kahn's algorithm
+    q: Deque[str] = collections.deque()
+    for char in in_degree:
+        if in_degree[char] == 0:
+            q.append(char)
+    
+    res = []
+    while q:
+        char = q.popleft()
+        res.append(char)
+        for nei in adjList[char]:
+            in_degree[nei] -= 1
+            if in_degree[nei] == 0:
+                q.append(nei)
+    
+    # If we were able to add all characters, return the result
+    if len(res) == len(adjList):
+        return "".join(res)
+    else:
+        return ""
 
-        while q:
-            c = q.popleft()
-            if c in visit:
-                continue
-            visit.add(c)
-            res.append(c)
-            for nei in adjList[c]:
-                if nei not in visit:
-                    q.append(nei)
-        mainRes.append("".join(res))
-    for k in adjList.keys():
-        if k not in visit:
-            bfs(k)
 
-    return "".join(mainRes)
+    
 
-print(foreignDictionary(["baa","abcd","abca","cab","cad"]))
+print(foreignDictionary(["wrt","wrf","er","ett","rftt","te"]))
