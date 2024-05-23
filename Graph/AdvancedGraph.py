@@ -145,4 +145,71 @@ def swimInWater(grid: List[List[int]]) -> int:
 
     return 0
 
-print(swimInWater([[0,1,2,3,4],[24,23,22,21,5],[12,13,14,15,16],[11,17,18,19,20],[10,9,8,7,6]]))
+# print(swimInWater([[0,1,2,3,4],[24,23,22,21,5],[12,13,14,15,16],[11,17,18,19,20],[10,9,8,7,6]]))
+
+'''
+Alien Dictionary
+
+There is a foreign language language which uses the latin alphabet, but the order among letters is not "a", "b", "c" ... "z" as in English.
+
+You receive a list of non-empty strings words from the dictionary, where the words are sorted lexicographically based on the rules of this new language.
+
+Derive the order of letters in this language. If the order is invalid, return an empty string. If there are multiple valid order of letters, return any of them.
+
+A string a is lexicographically smaller than a string b if either of the following is true:
+
+The first letter where they differ is smaller in a than in b.
+There is no index i such that a[i] != b[i] and a.length < b.length.
+
+SUDO CODE:
+   # create a adjList with key:value(set) for each char in all words
+
+   # compare two words char by char
+   # get the min length from both words
+   # if length of the word 1 is greater and prefix of both words are same then return empty string as no solution exist""
+   # loop through the prefix,
+   # if the char are different then add them in the adj list and break
+
+   # create a visit map where true value = in current path, false value = not in current path
+   # create a res list
+'''
+
+# still not working find out correct solution
+def foreignDictionary(words: List[str]) -> str:
+    adjList = {c:[] for word in words for c in word}
+
+    
+    for i in range(len(words)-1):
+        word1 = words[i]
+        word2 = words[i+1]
+        minLen = min(len(word1),len(word2))
+        if len(word1) > len(word2) and word1[:minLen] == word2[:minLen]:
+            return ""
+        for j in range(minLen):
+            if word1[j] != word2[j] and word2[j] not in adjList[word1[j]]:
+                adjList[word1[j]].append(word2[j])
+                
+    visit = set()
+    mainRes = []
+    def bfs(char):
+        q = collections.deque()
+        q.append(char)
+        res = []
+
+        while q:
+            c = q.popleft()
+            if c in visit:
+                continue
+            visit.add(c)
+            res.append(c)
+            for nei in adjList[c]:
+                if nei not in visit:
+                    q.append(nei)
+        mainRes.append("".join(res))
+    for k in adjList.keys():
+        if k not in visit:
+            bfs(k)
+
+    return "".join(mainRes)
+
+print(foreignDictionary(["baa","abcd","abca","cab","cad"]))
