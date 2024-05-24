@@ -91,4 +91,34 @@ def permute(nums: List[int]) -> List[List[int]]:
         nums.append(n)
  
     return res
-print(permute([1,2,3]))
+# print(permute([1,2,3]))
+
+'''
+Subset 2
+
+Given an integer array nums that may contain duplicates, return all possible 
+subsets
+ (the power set).
+
+The solution set must not contain duplicate subsets. Return the solution in any order.
+'''
+
+def subsetsWithDup(nums: List[int]) -> List[List[int]]:
+    res = []
+    nums.sort()
+    def backtrack(i,sub):
+        if i == len(nums):
+            res.append(sub.copy())
+            return
+        # all subset with current value
+        sub.append(nums[i])
+        backtrack(i+1,sub)
+        sub.pop()
+        # all subset without current value
+        while i+1<len(nums) and nums[i] == nums[i+1]:
+            i+=1
+        backtrack(i+1,sub)
+    backtrack(0,[])
+    return res
+
+# print(subsetsWithDup([1,2,2]))
