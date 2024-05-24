@@ -217,4 +217,42 @@ def isPalindrome(s,l,r):
             return False
         l,r = l+1,r-1
     return True
-print(partition("aab"))
+# print(partition("aab"))
+
+'''
+Letter Combination of phone number
+
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+
+A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+'''
+
+def letterCombinations( digits: str) -> List[str]:
+    if not digits:
+        return []
+    letterMap = {}
+    letterMap[2] = "abc"
+    letterMap[3] = "def"
+    letterMap[4] = "ghi"
+    letterMap[5] = "jkl"
+    letterMap[6] = "mno"
+    letterMap[7] = "pqrs"
+    letterMap[8] = "tuv"
+    letterMap[9] = "wxyz"
+    res = []
+    comb = []
+    def backtrack(i):
+        if i == len(digits):
+            res.append("".join(comb))
+            return
+        digit= int(digits[i])
+        digitStr = letterMap[digit]
+        for c in digitStr:
+            comb.append(c)
+            backtrack(i+1)
+            comb.pop()
+    backtrack(0)
+    return res
+
+print(letterCombinations("23"))
+
