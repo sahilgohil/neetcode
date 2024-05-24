@@ -122,3 +122,35 @@ def subsetsWithDup(nums: List[int]) -> List[List[int]]:
     return res
 
 # print(subsetsWithDup([1,2,2]))
+
+'''
+Combination Sum 2
+
+Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.
+
+Each number in candidates may only be used once in the combination.
+
+Note: The solution set must not contain duplicate combinations.
+'''
+
+def combinationSum2(candidates: List[int], target: int) -> List[List[int]]:
+    res =[]
+    candidates.sort()
+    def backtrack(i,currSum,com):
+        if currSum == target:
+            res.append(com.copy())
+            return
+        if currSum > target or i == len(candidates):
+            return
+        # add the current element in the combination 
+        com.append(candidates[i])
+        backtrack(i+1,currSum+candidates[i],com)
+        com.pop()
+        while i+1 < len(candidates) and candidates[i] == candidates[i+1]:
+            i += 1
+        # not include the current element in the combination
+        backtrack(i+1,currSum,com)
+    backtrack(0,0,[])
+    return res
+
+print(combinationSum2([10,1,2,7,6,1,5],8))
