@@ -65,4 +65,30 @@ def combinationSum(candidates: List[int], target: int) -> List[List[int]]:
 
     backtrack(0,[],0)
     return res
-print(combinationSum([2,3,6,7],7))
+# print(combinationSum([2,3,6,7],7))
+
+'''
+Permutation
+
+Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+
+'''
+
+def permute(nums: List[int]) -> List[List[int]]:
+    res = []
+    # take the current and permute the rest
+    # take the middle and permute the first and last
+    # take the last and permute the first and second
+    # base case if the length is one return the list of list
+    if len(nums) == 1:
+        return [nums.copy()]
+    for i in range(len(nums)):
+        n = nums.pop(0)
+        perms = permute(nums)
+        for perm in perms:
+            perm.append(n)
+        res.extend(perms)
+        nums.append(n)
+ 
+    return res
+print(permute([1,2,3]))
