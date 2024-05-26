@@ -1,5 +1,6 @@
 from typing import List
 import heapq
+import collections
 '''
 Kth largest element in a stream
 Design a class to find the kth largest element in a stream. Note that it is the kth largest element in the sorted order, not the kth distinct element.
@@ -48,3 +49,33 @@ def lastStoneWeight(stones: List[int]) -> int:
             heapq.heappush(maxH,-(y-x))
 
     return -heapq.heappop(maxH) if len(maxH) > 0 else 0
+
+'''
+K closest point to the origin
+
+Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane and an integer k, return the k closest points to the origin (0, 0).
+
+The distance between two points on the X-Y plane is the Euclidean distance (i.e., √(x1 - x2)2 + (y1 - y2)2).
+
+You may return the answer in any order. The answer is guaranteed to be unique (except for the order that it is in).
+
+create a min heap where heap is (dis, index of the points)
+put them in the minHeap
+while k > 1: pop the elements
+get the point's index and return the points
+'''
+def kClosest(points: List[List[int]], k: int) -> List[List[int]]:
+    minH = []
+    i = 0
+    for x,y in points:
+        dis = (x*x) + (y*y)
+        heapq.heappush(minH,(dis,i))
+        i+=1
+    res = []
+
+    while k>0:
+        idx = heapq.heappop(minH)[1]
+        res.append(points[idx])
+        k-=1
+    return res
+print(kClosest([[1,3],[-2,2]],1))
