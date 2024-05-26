@@ -78,4 +78,17 @@ def kClosest(points: List[List[int]], k: int) -> List[List[int]]:
         res.append(points[idx])
         k-=1
     return res
-print(kClosest([[1,3],[-2,2]],1))
+# print(kClosest([[1,3],[-2,2]],1))
+
+
+'''
+Kth largest element in the array
+
+'''
+def findKthLargest(nums: List[int], k: int) -> int:
+    minH = []
+    for n in nums:
+        heapq.heappush(minH,n)
+    while(len(minH) > k):
+        heapq.heappop(minH)
+    return minH[0]
