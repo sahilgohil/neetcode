@@ -1,5 +1,5 @@
-from typing import Optional
-
+from typing import Optional,List
+import collections
 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -128,3 +128,26 @@ def lowestCommonAncestor(root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'Tre
         else:
             return curr
     return root
+
+
+'''
+Level Order Traversal
+'''
+
+def levelOrder(root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
+        q = collections.deque()
+        res = []
+        q.append(root)
+        while q:
+            currList = []
+            for _ in range(len(q)):
+                node = q.popleft()
+                currList.append(node.val)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            res.append(currList)
+        return res
