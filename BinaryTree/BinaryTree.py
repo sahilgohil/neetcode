@@ -247,3 +247,16 @@ def kthSmallest( root: Optional[TreeNode], k: int) -> int:
     dfs(root)
     return res[0]
 
+
+'''
+Construct Binary Tree from preorder and inorder
+'''
+def buildTree(preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+    if not preorder or not inorder:
+        return None
+    
+    root = TreeNode(preorder[0])
+    mid = inorder.index(preorder[0]) # just index for all in the left tree and right tree
+    root.left = buildTree(preorder[1:mid+1],inorder[:mid])
+    root.right = buildTree(preorder[mid+1:],inorder[mid+1:])
+    return root
