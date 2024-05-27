@@ -89,3 +89,22 @@ def isSameTree( p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         return False
 
     return p.val == q.val and isSameTree(p.left,q.left) and isSameTree(p.right,q.right)
+
+
+'''
+IsSubTree
+
+'''
+def isSubtree(root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+    
+    def dfs(root, subRoot):
+        if not root and not subRoot:
+            return True
+        if not root or not subRoot:
+            return False
+        
+        if root.val == subRoot.val:
+            if isSameTree(root,subRoot):
+                return True
+        return dfs(root.left,subRoot) or dfs(root.right,subRoot)
+    return dfs(root,subRoot)
