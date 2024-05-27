@@ -288,3 +288,34 @@ def maxPathSum( root: Optional[TreeNode]) -> int:
     return res[0]
 
 
+'''
+Serialize and Deserialize
+'''
+
+class Codec:
+
+    def serialize(self, root):
+        res = []
+        def preOrder(root):
+            if not root:
+                res.append("N")
+                return
+            res.append(str(root.val))
+            preOrder(root.left)
+            preOrder(root.right)
+        preOrder(root)
+        return ','.join(res)
+    def deserialize(self, data):
+        vals = data.split(',')
+        self.i = 0
+        def dfs():
+            if vals[self.i] == "N":
+                self.i += 1
+                return None
+            node = TreeNode(int(vals[self.i]))
+            self.i += 1
+            node.left = dfs()
+            node.right = dfs()
+            return node
+        return dfs()
+
