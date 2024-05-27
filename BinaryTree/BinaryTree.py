@@ -78,3 +78,14 @@ def isBalanced(root: Optional[TreeNode]) -> bool:
         # return the answer with the maxheight at the node
         return [balanced, 1 + max(left[1],right[1])]
     return dfs(root)[0]# return the answer
+
+'''
+Same Tree
+'''
+def isSameTree( p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+    if not p and not q:
+        return True
+    if not p or not q:
+        return False
+
+    return p.val == q.val and isSameTree(p.left,q.left) and isSameTree(p.right,q.right)
