@@ -227,4 +227,23 @@ def isValidBST(root: Optional[TreeNode]) -> bool:
             and dfs(root.right,root.val,right)) # leave the right as it is
     return dfs(root,float('-inf'),float('inf'))
 
+'''
+Kth smallest element in the BST
+
+'''
+def kthSmallest( root: Optional[TreeNode], k: int) -> int:
+    res = [0,k]
     
+    def dfs(node):
+        if not node:
+            return
+
+        dfs(node.left)
+        res[1] -= 1
+        if res[1] == 0:
+            res[0] = node.val
+            return
+        dfs(node.right)
+    dfs(root)
+    return res[0]
+
