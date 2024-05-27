@@ -176,3 +176,29 @@ def rightSideView(root: Optional[TreeNode]) -> List[int]:
                 q.append(node.right)
 
     return res
+
+
+'''
+Good Nodes in binary tree
+
+Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
+
+Return the number of good nodes in the binary tree.
+'''
+def goodNodes(root: TreeNode) -> int:
+    if not root:
+        return 0
+    res = [0]
+    def dfs(root, preMax):
+        if not root:
+            return
+        
+        currVal = root.val
+        if currVal >= preMax:
+            res[0] += 1
+            preMax = max(currVal,preMax)
+        
+        dfs(root.left,preMax)
+        dfs(root.right,preMax)
+    dfs(root,root.val)
+    return res[0]
