@@ -120,3 +120,59 @@ def leastInterval(self, tasks: List[str], n: int) -> int:
         if q and q[0][1] == time:
             heapq.heappush(maxHeap, q.popleft()[0])
     return time
+
+
+'''
+Design Twitter
+
+Design a simplified version of Twitter where users can post tweets, follow/unfollow another user, and is able to see the 10 most recent tweets in the user's news feed.
+
+Implement the Twitter class:
+
+Twitter() Initializes your twitter object.
+void postTweet(int userId, int tweetId) Composes a new tweet with ID tweetId by the user userId. Each call to this function will be made with a unique tweetId.
+List<Integer> getNewsFeed(int userId) Retrieves the 10 most recent tweet IDs in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user themself. Tweets must be ordered from most recent to least recent.
+void follow(int followerId, int followeeId) The user with ID followerId started following the user with ID followeeId.
+void unfollow(int followerId, int followeeId) The user with ID followerId started unfollowing the user with ID followeeId.
+'''
+
+class Twitter:
+
+    def __init__(self):
+        # requires a count variable for keeping track of which tweet is the latest
+        self.count = 0
+        # followerMap that maps each follower map keeps track of who follows whom set()
+        self.followMap = collections.defaultdict(set) # userid -> set of user id's
+        # map to keep track of all the tweets of user id
+        self.tweetMap = collections.defaultdict(list) # userid -> list of (count, tweetID)
+
+    def postTweet(self, userId: int, tweetId: int) -> None:
+        self.tweetMap[userId].append([self.count,tweetId])
+        self.count -= 1
+
+    def getNewsFeed(self, userId: int) -> List[int]:
+        # first we need to create a maxheap
+        res = []
+        maxH = []
+        self.followMap[userId].add(userId)
+        for follower in self.followMap[userId]:
+            if follower in self.tweetMap:
+                index = len(self.tweetMap[follower])-1
+                count, tweetID = self.tweetMap[follower][index]
+                maxH.append([count, tweetID, follower, index - 1])
+        heapq.heapify(maxH)
+        while maxH and len(res) < 10:
+            count, tweetID, follower, index = heapq.heappop(maxH)
+            res.append(tweetID)
+            if index >= 0:
+                count, tweetID = self.tweetMap[follower][index]
+                heapq.heappush(maxH, [count, tweetID, follower, index-1])
+        return res
+
+    def follow(self, followerId: int, followeeId: int) -> None:
+        self.followMap[followerId].add(followeeId)
+        
+
+    def unfollow(self, followerId: int, followeeId: int) -> None:
+        if followeeId in self.followMap[followerId]:
+            self.followMap[followerId].remove(followeeId)
