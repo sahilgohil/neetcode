@@ -151,3 +151,28 @@ def levelOrder(root: Optional[TreeNode]) -> List[List[int]]:
                     q.append(node.right)
             res.append(currList)
         return res
+
+
+'''
+Binary Tree Right Side View
+
+Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+'''
+def rightSideView(root: Optional[TreeNode]) -> List[int]:
+    if not root:
+        return []
+    res = []
+    q = collections.deque()
+    q.append(root)
+    while q:
+        x = len(q)-1
+        for i in range(len(q)):
+            node = q.popleft()
+            if i == x:
+                res.append(node.val)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+
+    return res
