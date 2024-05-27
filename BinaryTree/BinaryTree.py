@@ -260,3 +260,31 @@ def buildTree(preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
     root.left = buildTree(preorder[1:mid+1],inorder[:mid])
     root.right = buildTree(preorder[mid+1:],inorder[mid+1:])
     return root
+
+
+'''
+Max Path Sum
+'''
+def maxPathSum( root: Optional[TreeNode]) -> int:
+    if not root:
+        return 0
+    res = [root.val]
+    def dfs(root):
+        if not root:
+            return 0
+        
+        leftMax = dfs(root.left)
+        rightMax = dfs(root.right)
+        leftMax = max(leftMax,0)
+        rightMax = max(rightMax,0)
+        currMax = root.val + leftMax + rightMax
+        
+        # calculate the max pathsum if we split
+        res[0] = max(res[0],currMax)
+
+
+        return root.val + max(leftMax,rightMax)#return the possible max sum from this node
+    dfs(root)
+    return res[0]
+
+
