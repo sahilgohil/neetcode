@@ -41,3 +41,19 @@ def maxDepth(root: Optional[TreeNode]) -> int:
             return 1
         return 1 + max(dfs(node.left),dfs(node.right))
     return dfs(root)
+
+
+'''
+Diameter of a tree
+'''
+def diameterOfBinaryTree( root: Optional[TreeNode]) -> int:
+    res = [0]
+    def dfs(root):
+        if not root:
+            return -1 # height is negative if the root is null and 0 if the root is leaft node
+        left = dfs(root.left)
+        right = dfs(root.right)
+        res[0] = max(res[0],2 + left + right) # calculate the diameter at the particular node
+        return 1 + max(left,right) # return the max height at the particular node
+    dfs(root)
+    return res[0]
