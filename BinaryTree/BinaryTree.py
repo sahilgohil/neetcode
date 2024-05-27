@@ -202,3 +202,29 @@ def goodNodes(root: TreeNode) -> int:
         dfs(root.right,preMax)
     dfs(root,root.val)
     return res[0]
+
+'''
+Validate Binary Search Tree
+
+Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+A valid BST is defined as follows:
+
+The left 
+subtree
+ of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+'''
+def isValidBST(root: Optional[TreeNode]) -> bool:
+    def dfs(root, left, right):
+        if not root:
+            return True
+        if not (root.val < right and root.val > left):
+            return False
+        
+        return (dfs(root.left,left,root.val)# left call leave the left as it is
+            and dfs(root.right,root.val,right)) # leave the right as it is
+    return dfs(root,float('-inf'),float('inf'))
+
+    
