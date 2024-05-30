@@ -163,3 +163,44 @@ def copyRandomList(head: 'Optional[Node]') -> 'Optional[Node]':
         newNode.random = dfs(node.random)
         return newNode
     return dfs(head)
+
+'''
+Add two numbers
+
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+'''
+
+def addTwoNumbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    carry = 0
+    dummy = ListNode(-1)
+    res = dummy
+    while l1 and l2:
+        currSum = l1.val + l2.val + carry
+        newNode = ListNode(currSum % 10)
+        carry = currSum // 10
+        res.next = newNode
+        res = res.next
+        l1 = l1.next
+        l2 = l2.next
+    while l1:
+        currSum = l1.val + carry
+        newNode = ListNode(currSum % 10)
+        carry = currSum // 10
+        res.next = newNode
+        res = res.next
+        l1 = l1.next
+    while l2:
+        currSum = l2.val + carry
+        newNode = ListNode(currSum % 10)
+        carry = currSum // 10
+        res.next = newNode
+        res = res.next
+        l2 = l2.next
+    if carry > 0:
+        newNode = ListNode(carry)
+        res.next = newNode
+    return dummy.next
+
+print(7//10)
