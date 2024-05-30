@@ -2,5 +2,6 @@
     "IDX.aI.enableInlineCompletion": false,
     "IDX.aI.enableCodebaseIndexing": false,
     "editor.wordWrap": "on",
-    "IDX.enableIntegrationsPanel": false
+    "IDX.enableIntegrationsPanel": false,
+    "python.analysis.typeCheckingMode": "basic"
 }
