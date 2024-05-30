@@ -133,3 +133,33 @@ def removeNthFromEnd(head: Optional[ListNode], n: int) -> Optional[ListNode]:
         curr = curr.next
         count += 1
     return head
+
+
+'''
+Copy random list pointer
+make a deep copy of the linked list
+'''
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+def copyRandomList(head: 'Optional[Node]') -> 'Optional[Node]':
+    copyMap = {} # (old:new)
+    '''
+    each node has its own value
+    -> create new node with its value if it does not already exist
+    -> create the next node with its value if it does not already exist
+    -> create the random node with the value given if it does not exist
+    '''
+    def dfs(node):
+        if not node:
+            return node
+        if node in copyMap:
+            return copyMap[node]
+        newNode = Node(node.val)
+        copyMap[node] = newNode
+        newNode.next = dfs(node.next)
+        newNode.random = dfs(node.random)
+        return newNode
+    return dfs(head)
