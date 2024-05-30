@@ -203,4 +203,17 @@ def addTwoNumbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[Li
         res.next = newNode
     return dummy.next
 
-print(7//10)
+'''
+Find If Linked List has a cycle
+'''
+def hasCycle(head: Optional[ListNode]) -> bool:
+    if not head:
+        return False
+    s,f = head,head.next
+    while f and f.next:
+        s = s.next
+        f = f.next.next
+        if s == f:
+            return True
+        
+    return False
