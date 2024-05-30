@@ -3,5 +3,5 @@
     "IDX.aI.enableCodebaseIndexing": false,
     "editor.wordWrap": "on",
     "IDX.enableIntegrationsPanel": false,
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "off"
 }

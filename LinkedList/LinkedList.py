@@ -68,3 +68,43 @@ def mergeKLists(lists: List[Optional[ListNode]]) -> Optional[ListNode]:
         list1 = lists.pop()
         newSortedList = mergeTwoLists(newSortedList,list1)
     return newSortedList
+
+
+'''
+Reorder the List
+
+You are given the head of a singly linked-list. The list can be represented as:
+
+L0 → L1 → … → Ln - 1 → Ln
+Reorder the list to be on the following form:
+
+L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+You may not modify the values in the list's nodes. Only nodes themselves may be changed.
+'''
+
+def reorderList(head: ListNode) -> None:
+    if not head:
+        return
+    s, f = head, head.next
+    while f and f.next:
+        s = s.next
+        f = f.next.next
+    
+    second = s.next
+    s.next = None
+    prev = None
+    while second:
+        tmp = second.next
+        second.next = prev
+        prev = second
+        second = tmp
+    # prev is second half and head is the first half
+    while head and prev:
+        htmp = head.next
+        ptmp = prev.next
+        head.next = prev
+        prev.next = htmp
+        head = htmp
+        prev = ptmp
+    
+
