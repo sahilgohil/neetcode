@@ -106,5 +106,30 @@ def reorderList(head: ListNode) -> None:
         prev.next = htmp
         head = htmp
         prev = ptmp
-    
 
+
+'''
+Remove the Nth node from the end of the list
+
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+'''
+def removeNthFromEnd(head: Optional[ListNode], n: int) -> Optional[ListNode]:
+    if not head:
+        return head
+    size = 0
+    curr = head
+    while curr:
+        size += 1
+        curr = curr.next
+    if size == n:
+        return head.next
+    remove = size-n
+    count = 1
+    curr = head
+    while True:
+        if remove == count:
+            curr.next = curr.next.next
+            break
+        curr = curr.next
+        count += 1
+    return head
