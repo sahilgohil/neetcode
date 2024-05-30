@@ -51,3 +51,20 @@ def mergeTwoLists(list1: Optional[ListNode], list2: Optional[ListNode]) -> Optio
         curr = curr.next
         list2 = list2.next
     return dummy.next
+
+
+'''
+Merge K sorted lists
+'''
+
+def mergeKLists(lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+    if not lists:
+        return None
+    newSortedList = None
+    while len(lists) >1:
+        list1 = lists.pop()
+        newSortedList = mergeTwoLists(newSortedList,list1)
+    if len(lists) == 1:
+        list1 = lists.pop()
+        newSortedList = mergeTwoLists(newSortedList,list1)
+    return newSortedList
