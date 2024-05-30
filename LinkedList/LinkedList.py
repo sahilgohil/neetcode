@@ -217,3 +217,21 @@ def hasCycle(head: Optional[ListNode]) -> bool:
             return True
         
     return False
+
+'''
+find duplicate number using the constant extra space
+'''
+def findDuplicate(nums: List[int]) -> int:
+    s = 0
+    f = 0
+    while True:
+        s = nums[s]
+        f = nums[nums[f]]
+        if s == f:
+            break
+    s2 =0
+    while True:
+        s = nums[s]
+        s2 = nums[s2]
+        if s == s2:
+            return s
