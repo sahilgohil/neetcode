@@ -1,3 +1,35 @@
+'''
+Stack Data structure
+'''
+class StackDS:
+    
+    def __init__(self):
+        self.stack = []
+    def push(self, v):
+        self.stack.append(v)
+    def pop(self):
+        if self.stack:
+            return self.stack.pop()
+        else:
+            return -1
+    def peek(self):
+        if self.stack:
+            return self.stack[-1]
+        else:
+            return -1
+def testStackDS():
+    myStack = StackDS()
+    myStack.push(1)
+    # 1
+    print(myStack.peek()) 
+    myStack.push(5)
+    # 5
+    print(myStack.peek())
+    # popped 5
+    myStack.pop()
+    # answer 1
+    print(myStack.peek())
+testStackDS()
 from typing import List
 '''
 Evaluate reverse polish notation
